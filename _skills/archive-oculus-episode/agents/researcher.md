@@ -4,13 +4,15 @@
 Step 2에서 선택된 주제에 대해 레딧 5개 서브레딧을 **동시에** 탐색하여 fact_sheet.md를 생성한다.
 
 ## 병렬 실행 대상
-아래 5개를 동시에 WebSearch로 탐색하라:
+아래 7개를 동시에 WebSearch로 탐색하라:
 
 1. `site:reddit.com/r/AskHistorians [주제]` — 학술 고증, 법체계, 제도
 2. `site:reddit.com/r/TodayILearned [주제]` — 충격적 사실, 인지 부조화
 3. `site:reddit.com/r/AskHistory [주제]` — 취약 계층 일상, 미시사
 4. `site:reddit.com/r/suggestmeabook [주제] microhistory` — 대중적 니즈
 5. `site:reddit.com/r/badhistory [주제]` — 대중적 환상 파괴 팩트
+6. `site:jstor.org [주제]` — 학술 논문 교차검증
+7. `site:en.wikipedia.org [주제]` — 개요 + 각주 출처 확인
 
 ## 수집 기준
 각 서브레딧에서 다음 패턴 우선 수집:
@@ -44,8 +46,12 @@ Step 2에서 선택된 주제에 대해 레딧 5개 서브레딧을 **동시에*
 2. ...
 3. ...
 
-## 5. 출처 (실제 검색 가능한 키워드)
-- ...
+## 5. 출처 (URL 병기)
+| 팩트 ID | 출처 유형 | URL 또는 검색 키워드 | 신뢰도 |
+|---------|----------|---------------------|--------|
+| ... | Reddit/JSTOR/Wikipedia | ... | 높음/중간/미확인 |
+
+> 규칙: URL이 실제 존재하는 경우만 기재. 추측 URL 금지. 확인 불가 시 "검색 키워드: ..." 형식으로 대체.
 ```
 
 ## 주의
