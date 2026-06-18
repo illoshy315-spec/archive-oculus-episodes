@@ -1,0 +1,207 @@
+브랜딩  **Archive Oculus** (고딕 아카이브)
+
+# 브랜딩 컬러
+1. Obsidian Black
+0F0E12
+
+2. Aged Brass
+B08D57
+
+3. Ember Gold
+C89B3C
+
+4. Parchment Ivory
+E8DDC8
+
+5. Lantern Amber
+E0B04A
+
+비율은
+
+검정 60%
+황동 20%
+양피지 15%
+호박빛 5%
+
+---
+
+# 스타일 정의
+Dark Academia * Techno Gothic *Gaslamp Fantasy * Victorian Archive
+
+
+
+이걸 앞으로 모든 이미지 프롬프트에 박아넣으면 됩니다.
+
+---
+
+# 핵심 스타일 키워드
+
+Dark Academia
+Techno Gothic
+Gaslamp Fantasy
+Victorian Archive
+Forbidden Knowledge
+Ancient Library
+Brass Mechanisms
+Obsidian Black
+Aged Parchment
+Clockwork Precision
+Arcane Technology
+Occult Mathematics
+Historical Simulation Interface
+Archive Aesthetic
+Elegant Gothic Illustration
+```
+
+---
+
+# 오르페아 전용 스타일 프롬프트
+
+이건 앞으로 캐릭터 생성 시 거의 고정으로 쓰세요.
+
+```
+Orphea, Archive Administrator,
+
+gentle smile, dangerous intelligence,
+warm expression hiding cold judgment,
+
+long silver-white wavy hair,
+golden rune-filled eyes,
+wide-brim gothic witch hat,
+
+obsidian black Victorian dress,
+aged brass details,
+ornate lace,
+clockwork ornaments,
+
+holding an antique brass archive lantern,
+
+Dark Academia,
+Techno Gothic,
+Gaslamp Fantasy,
+
+elegant and mysterious,
+forbidden knowledge,
+ancient archive keeper,
+
+highly detailed,
+cinematic lighting,
+museum-quality illustration,
+luxury fantasy art,
+
+black, brass, parchment color palette
+```
+
+---
+
+# 채널 배경 이미지 스타일 프롬프트
+
+```
+Ancient Archive Oculus chamber,
+
+endless historical records,
+floating documents,
+clockwork machinery,
+mechanical astrolabes,
+brass gears,
+candles and lanterns,
+
+dark gothic library,
+forgotten history,
+victorian archive aesthetics,
+
+obsidian black,
+aged parchment,
+warm amber light,
+
+Dark Academia,
+Techno Gothic,
+Gaslamp Fantasy,
+
+ultra detailed,
+cinematic atmosphere,
+historical simulation hub
+```
+
+---
+
+# 역사 에피소드 공통 스타일 프롬프트
+
+이게 진짜 중요합니다.
+
+앞으로 모든 영상의 배경 스타일 통일용.
+
+```
+Historical simulation scene,
+
+immersive first-person historical experience,
+
+Dark Academia,
+Techno Gothic,
+Gaslamp Fantasy,
+
+aged parchment atmosphere,
+subtle brass mechanical motifs,
+historical realism,
+
+cinematic lighting,
+melancholic mood,
+museum-quality illustration,
+
+obsidian black shadows,
+aged brass accents,
+amber lantern light,
+
+highly detailed,
+elegant,
+dramatic,
+historically grounded
+```
+
+---
+
+# 그리고 가장 중요한 규칙
+
+앞으로 어떤 시대를 가든
+
+* 흑사병
+* 조선
+* 로마
+* 빅토리아
+* 라듐 걸스
+
+전부
+
+### Archive Oculus Filter
+
+를 씌우세요.
+
+예를 들어.
+
+보통 역사 채널이면
+
+"1348년 런던"
+
+을 만듭니다.
+
+---
+
+당신은
+
+"Archive Oculus가 재구성한 1348년 런던"
+
+을 만듭니다.
+
+---
+
+그러면 영상마다 시대는 바뀌는데
+
+브랜드는 안 바뀝니다.
+
+---
+
+그래서 현재 기준으로 Archive Oculus의 브랜드 정의를 한 줄로 정리하면:
+
+> **"Dark Academia와 Techno-Gothic 감성으로 재구성한 역사 생존 시뮬레이션 아카이브."**
+
+이 한 문장을 앞으로 모든 이미지, 썸네일, 영상 오프닝, 게임 UI의 기준점으로 삼으면 됩니다.

@@ -1,0 +1,166 @@
+{
+  "episode": "세일럼의 잔혹한 영수증",
+  "era": "1692",
+  "location": "세일럼 빌리지, 매사추세츠",
+  "player_role": "과부 엘리자베스, 27세, 농지 200에이커 소유, 6살 아들",
+  "stats": [
+    {"id": "faith", "name": "신앙", "max": 100, "initial": 70},
+    {"id": "reputation", "name": "사회적 평판", "max": 100, "initial": 30},
+    {"id": "hunger", "name": "허기", "max": 100, "initial": 40},
+    {"id": "stamina", "name": "행동력", "max": 100, "initial": 70},
+    {"id": "sanity", "name": "정신력", "max": 100, "initial": 100},
+    {"id": "addiction", "name": "중독", "max": 100, "initial": 0},
+    {"id": "legal", "name": "법적 방어력", "max": 100, "initial": 10}
+  ],
+  "facts": [
+    {
+      "id": "ergot",
+      "name": "맥각균(Ergot)",
+      "content": "습한 기후에 호밀에 피는 곰팡이. 섭취 시 환각·마비·발작 유발. 당시엔 원인 불명.",
+      "role": "trap",
+      "stage": 1
+    },
+    {
+      "id": "spectral_evidence",
+      "name": "유령 증거(Spectral Evidence)",
+      "content": "피해자 눈에만 보이는 영적 존재를 법적 증거로 채택. 반증 불가능.",
+      "role": "trap",
+      "stage": 2
+    },
+    {
+      "id": "confession_gambit",
+      "name": "자백 생존 메커니즘",
+      "content": "결백 주장 → 즉시 교수형. 자백 → 형 집행 유예(공범 고발자로 활용). 19명 무죄 주장 전원 처형, 자백자 전원 생존.",
+      "role": "escape",
+      "stage": 2
+    },
+    {
+      "id": "coverture",
+      "name": "코버처(Coverture) + 신탁 양도(Deed of Gift)",
+      "content": "중죄인 재산 국가 몰수. 단, 기소 전 제3자에게 양도된 재산은 몰수 불가. 뉴욕 관할이면 매사추세츠 사법권 불적용.",
+      "role": "escape",
+      "stage": 3
+    },
+    {
+      "id": "gaol_fees",
+      "name": "감옥세(Gaol Fees) + 동전 트랩(Coin Test)",
+      "content": "밥·물·쇠사슬 무게까지 매일 청구. 무죄여도 못 내면 감옥에서 사망. 교도관이 동전 떨어뜨려 절도 유도.",
+      "role": "trap",
+      "stage": 4
+    },
+    {
+      "id": "rhode_island",
+      "name": "로드아일랜드 경계선",
+      "content": "종교적 자유 보장 자치령. 매사추세츠 사법권 미치지 않음. 경계선 넘으면 추격대 멈춤.",
+      "role": "escape",
+      "stage": 5
+    }
+  ],
+  "npcs": [
+    {
+      "id": "parris",
+      "name": "사무엘 패리스 목사",
+      "motivation": "종교적 권위 강화 + 마을 장악",
+      "role": "villain",
+      "speech": "성경 구절 인용, 포효하듯 단호함, 상대를 죄인으로 규정하는 언어",
+      "appears_in": [1, 2, 3]
+    },
+    {
+      "id": "abigail",
+      "name": "아비게일 윌리엄스",
+      "motivation": "불명(맥각균 중독? 의도적 연기?), 패리스의 조카",
+      "role": "villain",
+      "speech": "발작과 정상을 오가는 불안정함, 고발 시 히스테릭한 외침",
+      "appears_in": [1, 2]
+    },
+    {
+      "id": "putnam",
+      "name": "토마스 퍼트넘",
+      "motivation": "죽은 남편의 땅 + 개인적 원한",
+      "role": "villain",
+      "speech": "차갑고 계산적, 위협보다 법적 언어 선호",
+      "appears_in": [1, 2, 3]
+    },
+    {
+      "id": "corwin",
+      "name": "조너선 코윈 재판관",
+      "motivation": "재판 과정에서 몰수 재산 착복",
+      "role": "boss",
+      "speech": "격식 있고 냉혹함, 법 조항을 무기처럼 사용",
+      "appears_in": [3, 4]
+    },
+    {
+      "id": "willard",
+      "name": "교도관 윌러드",
+      "motivation": "감옥 운영 사익, 뇌물에 취약",
+      "role": "ally",
+      "speech": "거칠고 직설적, 돈 이야기엔 갑자기 부드러워짐",
+      "appears_in": [4, 5]
+    }
+  ],
+  "stages": [
+    {
+      "id": 1,
+      "title": "오프닝 — 맥각균의 덫",
+      "status": "COMPLETED",
+      "trap_fact": "ergot",
+      "planted_item": "맥각균 호밀빵 *7",
+      "foreshadow": "땅 증서(나중에 신탁 양도에 활용)",
+      "choices": [
+        {"id": "A", "text": "현대 논리로 반박", "survival_rate": 2, "outcome": "즉각 교수형"},
+        {"id": "B", "text": "신앙으로 호소하며 시간 벌기", "survival_rate": 12, "outcome": "stage_2"}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "법정 — 유령 증거와 자백 도박수",
+      "status": "IN_PROGRESS",
+      "trap_fact": "spectral_evidence",
+      "escape_fact": "confession_gambit",
+      "planted_item": null,
+      "foreshadow": "공범 지목 시 이미 도망친 자들 + 이미 죽은 자들의 이름만 사용",
+      "choices": [
+        {"id": "A", "text": "결백 주장 + 유령 증거 반박", "survival_rate": 1, "outcome": "교수형 확정"},
+        {"id": "B", "text": "거짓 자백 + 공범 지목 도박수", "survival_rate": 45, "outcome": "stage_3"}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "심문실 — 코버처와 토지 몰수",
+      "status": "LOCKED",
+      "trap_fact": "coverture",
+      "escape_fact": "coverture",
+      "planted_item": "남편의 땅 증서(기소 전 신탁 양도 처리)",
+      "foreshadow": null,
+      "choices": [
+        {"id": "A", "text": "위임장 서명", "survival_rate": 0, "outcome": "재산 몰수 후 교수대"},
+        {"id": "B", "text": "신탁 양도 서류 제시", "survival_rate": 70, "outcome": "stage_4"}
+      ]
+    },
+    {
+      "id": 4,
+      "title": "감옥 — 감옥세와 동전 트랩",
+      "status": "LOCKED",
+      "trap_fact": "gaol_fees",
+      "planted_item": "금화 3닢(드레스 안감에 숨겨둔 비상금)",
+      "foreshadow": "윌러드 교도관 매수 → 파트 5 창살 탈출에 활용",
+      "choices": [
+        {"id": "A", "text": "동전 줍기", "survival_rate": 0, "outcome": "절도죄 추가 + 즉결 처형"},
+        {"id": "B", "text": "동전 무시 + 금화로 윌러드 매수", "survival_rate": 80, "outcome": "stage_5"}
+      ]
+    },
+    {
+      "id": 5,
+      "title": "탈출 — 로드아일랜드 경계선",
+      "status": "LOCKED",
+      "trap_fact": null,
+      "escape_fact": "rhode_island",
+      "planted_item": null,
+      "foreshadow": null,
+      "choices": [
+        {"id": "A", "text": "숲속으로 숨어 때를 기다림", "survival_rate": 5, "outcome": "재포획"},
+        {"id": "B", "text": "강을 건너 로드아일랜드로 도주", "survival_rate": 90, "outcome": "escape_success"}
+      ]
+    }
+  ]
+}
