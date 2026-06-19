@@ -41,7 +41,7 @@ NPC 카드 작성. scenario.json 골격 생성.
 사용자 승인 없이 Step 4로 진행 불가.
 
 ### STEP 4 — 비주얼 노벨 스크립트 집필
-`references/steps/step4.md` + `references/orphea_voice_guide.md` + `references/harness.md` + `references/vn_format.md` 로드.
+`references/steps/step4.md` + `references/orphea_voice_guide.md` + `references/harness.md` + `references/vn_format.md` + `references/production_spec.md` 로드.
 분기 단위로 집필 (씬 단위 아님). 선택지마다 완전히 다른 장면 쓰지 않음 — 스탯 변화와 결과만 분기, 공통 텍스트 공유.
 분기 완성마다 사용자 승인 대기.
 
@@ -86,5 +86,6 @@ _reference/              ← 레퍼런스 보관 (삭제 금지)
 - **세계관 확장 바이블 (고정NPC 포함)**: `references/world_bible.md` ← 세계관/캐릭터 작업 시 필수
 - **고정 NPC 카드 완성본**: `references/fixed_npc_cards.md` ← 오르페아/네피아/역병의사/글리치NPC
 - **에피소드 포맷 카탈로그**: `references/episode_formats.md` ← 포맷 선정 및 로드맵 참고
+- **제작 세부 명세**: `references/production_spec.md` ← 분량/배드엔딩/표정트리거/BGM/온보딩/리플레이 확정 기준
 - 오르페아 캐릭터: `references/orphea_voice_guide.md`
 - 집필 수칙: `references/harness.md`
