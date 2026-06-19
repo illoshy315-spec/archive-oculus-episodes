@@ -55,6 +55,9 @@ vn_script.md를 HTML5 비주얼 노벨로 구현.
 `agents/extractor.md` 로드 → 게임 완성 후 자동 실행.
 출력: 유튜브 보이스오버 대본 / shorts_hooks.json / web_article.md
 
+> 유튜브 독립 대본이 필요할 때: `references/steps/step4_youtube.md` 로드.
+> 게임 없이 나레이션 영상만 만드는 경우에 사용.
+
 ---
 
 ## 출력물 구조
@@ -77,5 +80,8 @@ _reference/              ← 레퍼런스 보관 (삭제 금지)
 
 ## 브랜드 레퍼런스
 - 브랜드/세계관: `references/brand_bible.md`
+- **세계관 확장 바이블 (고정NPC 포함)**: `references/world_bible.md` ← 세계관/캐릭터 작업 시 필수
+- **고정 NPC 카드 완성본**: `references/fixed_npc_cards.md` ← 오르페아/네피아/역병의사/글리치NPC
+- **에피소드 포맷 카탈로그**: `references/episode_formats.md` ← 포맷 선정 및 로드맵 참고
 - 오르페아 캐릭터: `references/orphea_voice_guide.md`
 - 집필 수칙: `references/harness.md`
