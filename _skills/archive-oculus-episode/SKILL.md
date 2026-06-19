@@ -42,13 +42,16 @@ NPC 카드 작성. scenario.json 골격 생성.
 
 ### STEP 4 — 비주얼 노벨 스크립트 집필
 `references/steps/step4.md` + `references/orphea_voice_guide.md` + `references/harness.md` + `references/vn_format.md` 로드.
-비주얼 노벨 대화 스크립트 형식으로 씬 단위 집필.
-짧은 대사 + 선택지 + 씬 지시어 중심. 나레이션 최소화.
-씬 완성마다 자체 체크 후 사용자 승인 대기.
+분기 단위로 집필 (씬 단위 아님). 선택지마다 완전히 다른 장면 쓰지 않음 — 스탯 변화와 결과만 분기, 공통 텍스트 공유.
+분기 완성마다 사용자 승인 대기.
+
+### STEP 4.5 — 화면 프로토타입 (신규)
+`references/steps/step4_5.md` 로드.
+vn_script.md + scenario.json을 claude.ai에 전달 → Artifact로 프로토타입 제작 → 확정 후 코드 클코에게 전달.
 
 ### STEP 5 — 게임 빌드
 `references/steps/step5_build.md` 로드.
-vn_script.md를 HTML5 비주얼 노벨로 구현.
+Step 4.5 prototype.html 기반으로 game.html 빌드. 포맷별 UI 컴포넌트 분기 (법정물/미연시/육성/로그라이크 등).
 브라우저에서 바로 실행 가능한 단일 HTML 파일 생성.
 
 ### STEP 6 — OSMU 추출
