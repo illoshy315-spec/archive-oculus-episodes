@@ -19,7 +19,8 @@
     "faith":      { "label": "신앙",      "initial": 80,  "collapse_effect": "공동체 추방, 표적 가속" },
     "reputation": { "label": "평판",      "initial": 70,  "collapse_effect": "이웃 전원 적대, NPC 조력 불가" },
     "defense":    { "label": "법적방어력", "initial": 30,  "collapse_effect": "심문/법정 선택지 제한" },
-    "sanity":     { "label": "정신력",    "initial": 100, "collapse_effect": "자백 강요 선택지 강제 발동" }
+    "sanity":     { "label": "정신력",    "initial": 100, "collapse_effect": "자백 강요 선택지 강제 발동",
+                    "note": "체력 소모(배고픔, 피로)도 정신력으로 처리. hp 별도 스탯 없음." }
   },
 
   "items": [
@@ -139,7 +140,7 @@
           "role": "탈출구",
           "text": "예배에 3주 빠진 것이 생각나 지금이라도 나간다",
           "hook_tag": null,
-          "immediate_effects": { "faith": 20, "reputation": 10, "hp": -10 },
+          "immediate_effects": { "faith": 20, "reputation": 10, "sanity": -10 },
           "downstream_effect": {
             "type": "item_grant + event_trigger",
             "item": "land_deed_info",
@@ -188,10 +189,16 @@
           {
             "id": "skip",
             "text": "참는다",
-            "downstream": { "hp": -10 }
+            "downstream": { "sanity": -10 }
           }
         ]
       },
+      "conditional_modifiers": [
+        {
+          "condition": "stage1_choice == 'C'",
+          "effect": "고양이 주인이 먼저 심문받는 동안 대기. entry_event 빵 선택 시 정신력 소모 -10 감소 (먹는다: -20→-10 / 참는다: -10→0)."
+        }
+      ],
       "stat_trigger": {
         "condition": "sanity <= 30",
         "effect": "환각 연출 강화. 선택지 텍스트 변화."
@@ -239,6 +246,15 @@
       "context": ["경제", "공동체"],
       "choice_type": "아이템/정보 획득 + 인물 관련",
       "trap_choice_id": "B",
+      "conditional_events": [
+        {
+          "condition": "stage2_choice == 'A'",
+          "timing": "stage3 진입 직후, 세라 등장 전",
+          "situation": "심문관 부하가 감옥 문을 열고 들어온다. '공범 이름 세 명 더 대시오.'",
+          "effect": { "sanity": -10 },
+          "note": "세라가 이 장면을 지켜봄. 이후 세라의 첫 대사 조건부 변화."
+        }
+      ],
       "entry_event": {
         "id": "mary_eye_contact",
         "trigger": "stage3 진입 직전, 끌려오는 길",
@@ -291,7 +307,7 @@
           "role": "리스크",
           "text": "간수에게 뇌물을 제안한다",
           "hook_tag": null,
-          "immediate_effects": { "hp": 10 },
+          "immediate_effects": { "sanity": 10 },
           "downstream_effect": {
             "type": "npc_change",
             "target_stage": "final",
