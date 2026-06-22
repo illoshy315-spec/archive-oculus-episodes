@@ -3,320 +3,316 @@
 
 ---
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-OPENING
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCENE: opening_cinematic
+BG: bg_black.jpg
+BGM: bgm_void_hum
+SFX: sfx_static_low
+
+NARR: "가죽 냄새. 땀. 무언가 오래된 것이 타는 냄새."
+NARR: "손이 무겁다."
+
+SHOW: orphea default
+ORPHEA: "Archive Oculus. 역사 생존 시뮬레이션."
+ORPHEA: "인스턴스 로드 중."
+ORPHEA: "세일럼 마을. 1692년 6월."
+ORPHEA: "경고: 이 시뮬레이션에서 침묵은 유죄의 증거입니다."
+HIDE: orphea
+
+END_SCENE
+
 
 SCENE: opening_01
-BG: bg_salem_dawn_fog.jpg
-BGM: bgm_orphea_theme
-SFX: sfx_wind_low
+BG: bg_salem_meetinghouse_interior.jpg
+BGM: bgm_crowd_tension
+SFX: sfx_crowd_murmur_close
 
-NARR: "1692년 1월. 매사추세츠 세일럼 빌리지."
-NARR: "새벽 다섯 시. 아직 해가 뜨지 않았다."
+NARR: "예배당 안이다. 사람이 너무 많다."
+NARR: "양초 연기와 젖은 울 냄새. 누군가의 팔꿈치가 등을 밀어낸다."
 
-SFX: sfx_crowd_murmur_distant
-NARR: "파리스 목사의 집에서 불빛이 새어 나온다."
+SHOW: orphea default
+ORPHEA: "세일럼 마을. 당신은 이 마을의 과부 주민입니다."
+ORPHEA: "6살 아드님이 마당 돌담 곁에서 기다리고 계십니다."
+HIDE: orphea
 
 END_SCENE
 
 
 SCENE: opening_02
-BG: bg_parris_house_interior.jpg
-BGM: bgm_orphea_theme
-SFX: sfx_fire_crackle
+BG: bg_salem_meetinghouse_interior.jpg
+BGM: bgm_crowd_tension
+SFX: sfx_crowd_breath
 
-NARR: "방 안에 사람들이 모여 있다."
-NARR: "누군가의 목소리가 높아졌다가, 갑자기 끊겼다."
+NARR: "군중의 시선이 앞쪽 한 곳에 모여 있다."
 
 SHOW: abigail default
-SFX: sfx_chair_scrape
-
+SFX: sfx_abigail_gasp
+NARR: "아비게일의 눈 초점이 0.5초 비어진다."
 SHOW: abigail hysteria
 SFX: sfx_abigail_scream
-ABIGAIL: "아아—! 저기 있어요! 저 여자가 저를 조르고 있어요!"
+
+ABIGAIL: "저기 있어요. 저기—"
+ABIGAIL: "저 사람이요. 어젯밤에 제 방에 왔어요."
 
 SFX: sfx_crowd_gasp
-SFX: sfx_glass_break
+NARR: "손가락이 허공을 가리킨다."
+NARR: "그 방향에 당신이 있다."
 
 END_SCENE
 
 
 SCENE: opening_03
-BG: bg_parris_house_interior.jpg
-BGM: bgm_orphea_theme
-SFX: sfx_crowd_murmur
+BG: bg_salem_meetinghouse_interior.jpg
+BGM: bgm_crowd_tension
+SFX: sfx_crowd_shift
+
+NARR: "주변 여성들이 남편 쪽으로 바짝 붙는다. 말 없이."
+NARR: "벽 쪽 그림자에서 검은 코트 자락이 스친다. 아무도 돌아보지 않는다."
 
 SHOW: abigail hysteria
-NARR: "아비게일 윌리엄스, 11세."
-NARR: "두 손을 앞에 모으고 항상 고개를 약간 숙이던 아이였다."
-NARR: "눈에서 초점이 사라지는 데 0.5초가 걸렸다."
-
-SFX: sfx_abigail_scream
-SHOW: abigail default
-ABIGAIL: "저기... 저 사람이요. 어젯밤에 제 방에 왔어요."
-
+ABIGAIL: "쫓아내 주세요. 쫓아내—"
 HIDE: abigail
 
-END_SCENE
-
-
-SCENE: opening_04
-BG: bg_black_screen.jpg
-BGM: bgm_orphea_theme_full
-
-NARR: "군중의 웅성거림이 멀어진다."
-NARR: "누군가의 비명이 안개 속으로 녹아든다."
-
-SFX: sfx_lantern_flicker
+NARR: "발작이 계속된다. 군중이 조여든다."
 
 SHOW: orphea default
-ORPHEA: "축하드려요. 1692년 세일럼에 접속하셨습니다."
-ORPHEA: "생존 확률 23%. 역사적으로 인기 있는 자살 루트입니다."
+ORPHEA: "현재 생존 확률 계산 중."
+ORPHEA: "유감이군요. 썩 좋은 숫자가 아닙니다."
 HIDE: orphea
 
+GOTO: opening_end
 END_SCENE
 
 
-SCENE: opening_05
-BG: bg_stat_init_screen.jpg
-BGM: bgm_orphea_theme
+SCENE: opening_end
+BG: bg_salem_meetinghouse_exterior.jpg
+BGM: bgm_tension_release
+SFX: sfx_crowd_dispersing
 
-NARR: "엘리자베스. 27세. 과부."
-NARR: "강변 농지 200에이커. 아들 하나. 나이 여섯."
-NARR: "남편 없는 자산가 여성이란—"
+NARR: "예배당 밖. 군중이 흩어진다."
+NARR: "돌담 곁에 아이가 서 있다. 작은 돌을 발로 차고 있다."
 
-SHOW: orphea slight_smile
-ORPHEA: "굶주린 하이에나들에게 가장 뜯어먹기 좋은 고기방패에 불과하죠."
-HIDE: orphea
-
-STAT: 신앙 80
-STAT: 평판 70
-STAT: 법적방어력 30
-STAT: 정신력 100
-
+GOTO: stage1_entry
 END_SCENE
 
 
-SCENE: opening_06
-BG: bg_salem_street_morning.jpg
-BGM: bgm_ep01_theme_calm
-SFX: sfx_rooster_crow
-
-NARR: "다음 날 아침. 소문은 이미 마을 전체에 퍼져 있었다."
-NARR: "아비게일이 발작을 일으켰다. 악마가 그 몸을 빌렸다."
-NARR: "이웃들이 당신의 문 앞에서 속삭이는 소리가 들렸다."
-
-SFX: sfx_door_knock_soft
-
-END_SCENE
-
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STAGE 1 — 공동체 / 젠더 / 정보·소문
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-SCENE: stage1_01
-BG: bg_salem_street_morning.jpg
-BGM: bgm_ep01_theme_calm
+SCENE: stage1_entry
+BG: bg_salem_meetinghouse_exterior.jpg
+BGM: bgm_tension_release
 SFX: sfx_wind_low
 
-SHOW: mary default
-MARY: "우리끼리만 아는 얘긴데... 이대로 가면 우리 다 끝나."
-MARY: "메인 스트리트에서만 벌써 세 명이 이름이 올랐어."
+NARR: "긴장이 풀리려는 순간, 누군가 팔을 잡는다."
 
-SHOW: mary calculating
-MARY: "그 강변 쪽 땅... 아직 네 명의야?"
-
-HIDE: mary
+SHOW: mary warm
+MARY: "우리끼리만 아는 얘긴데—"
+MARY: "안에서 봤어요. 아비게일이 당신 쪽을 가리켰잖아요."
 
 END_SCENE
 
 
-SCENE: stage1_choice
-BG: bg_salem_crossroads.jpg
-BGM: bgm_ep01_theme_calm
-SFX: sfx_wind_low
+SCENE: stage1_entry_02
+BG: bg_salem_meetinghouse_exterior.jpg
+BGM: bgm_tension_release
+SFX: sfx_footsteps_passing
 
-SHOW: mary default
-MARY: "같이 싸우자. 우리가 먼저 움직이면 막을 수 있어."
-HIDE: mary
+SHOW: mary warm
+MARY: "탄원서예요. 서명인이 많을수록 효과 있을 거야."
 
-SHOW: orphea default
-ORPHEA: "시스템 알림. 중요 선택 이벤트 발생."
-HIDE: orphea
+NARR: "말하는 동안 메리의 손이 많이 움직인다."
+NARR: "메리의 시선이 강변 쪽으로 한 번 이탈한다. 말은 없다."
+
+SFX: sfx_man_footsteps
+NARR: "이웃 남성이 지나가며 메리를 흘겨본다."
+SHOW: mary frozen
+NARR: "메리가 0.5초 굳는다."
+SHOW: mary warm
+
+END_SCENE
+
+
+SCENE: stage1_entry_03
+BG: bg_salem_meetinghouse_exterior.jpg
+BGM: bgm_tension_release
+
+NARR: "아이 쪽으로 걸어가는 메리."
+NARR: "건빵을 꺼내 아이에게 내민다. 아이를 보지 않는다."
+NARR: "건네는 손과 받는 손이 잠깐 겹친다."
+NARR: "메리는 이미 다른 곳을 보고 있다."
+
+NARR: "아까 메리가 강변 쪽을 왜 봤는지 — 아무도 말하지 않았다."
 
 CHOICE:
-  A: "메리와 함께 탄원서를 써서 아비게일을 거짓말쟁이로 고발한다" → stage1_A_01
-  B: "예배에 3주 빠진 것이 생각나 지금이라도 나간다" → stage1_B_01
+  A: "메리와 함께 탄원서를 써서 아비게일의 증언을 반박한다" → stage1_A_01
+  B: "예배를 3주 빠진 것이 생각나 지금이라도 성실히 나간다" → stage1_B_01
   C: "이웃집 검은 고양이를 마녀의 사역자로 고발한다" → stage1_C_01
 
 END_SCENE
 
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STAGE 1 — A: 탄원서 (함정)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 SCENE: stage1_A_01
-BG: bg_mary_house_interior.jpg
-BGM: bgm_ep01_theme_calm
-SFX: sfx_quill_writing
+BG: bg_salem_clerks_office_exterior.jpg
+BGM: bgm_bureaucratic_low
+SFX: sfx_quill_scratching
 
-SHOW: mary default
-MARY: "우리끼리만 아는 얘긴데... 이걸 제출하면 판사도 못 무시할 거야."
-MARY: "사람들이 보면 생각이 바뀔 거라고."
+NARR: "집무실 문 앞. 서기가 창구에 앉아 있다."
+NARR: "메리가 탄원서를 밀어 넣는다."
 
-NARR: "탄원서에 서명한다. 잉크가 마르기 전에 마을 게시판에 붙였다."
-
-HIDE: mary
+SHOW: mary warm
+NARR: "서기가 서류를 받아 목록에 기재한다."
+NARR: "플레이어는 그 목록을 볼 수 없다."
 
 END_SCENE
 
 
 SCENE: stage1_A_02
-BG: bg_salem_street_morning.jpg
-BGM: bgm_ep01_theme_tense
-SFX: sfx_crowd_murmur
+BG: bg_salem_clerks_office_exterior.jpg
+BGM: bgm_bureaucratic_low
+SFX: sfx_quill_scratching
 
-NARR: "다음 날. 탄원서는 찢겨 있었다."
-NARR: "서명자 명단이 법원 기록에 올랐다."
+SHOW: mary warm
+NARR: "메리가 팔을 꽉 쥔다."
 
-SHOW: orphea slight_smile
-ORPHEA: "감정적으로는 훌륭합니다. 통계적으로는 끔찍하고요."
-ORPHEA: "탄원서는 법적 효력이 없습니다. 공범 목록으로는 유효하지만."
-HIDE: orphea
+SFX: sfx_door_creak_interior
+NARR: "문 너머에서 낮은 목소리가 들린다."
+CORWIN: (문 너머) "서명인 명단을 올려."
+
+SHOW: mary frozen
+NARR: "메리가 즉시 손을 뗀다."
+HIDE: mary
+
+END_SCENE
+
+
+SCENE: stage1_A_03
+BG: bg_salem_clerks_office_exterior.jpg
+BGM: bgm_bureaucratic_low
+SFX: sfx_quill_stop
+
+NARR: "서기의 펜이 멈추지 않는다."
+NARR: "탄원인 칸이 아닌 다른 칸에 이름이 적힌다."
 
 STAT: 평판 -30
+
+NARR: "메리는 놀라지 않는다."
 
 GOTO: stage1_end
 END_SCENE
 
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STAGE 1 — B: 예배 참석 (탈출구)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 SCENE: stage1_B_01
-BG: bg_salem_church_exterior.jpg
-BGM: bgm_ep01_theme_calm
-SFX: sfx_church_bell
+BG: bg_salem_meetinghouse_interior_empty.jpg
+BGM: bgm_hymn_distant
+SFX: sfx_footsteps_hollow
 
-NARR: "3주 만에 예배당 문을 열었다."
-NARR: "나무 의자가 차갑다. 찬송가 소리가 벽을 타고 내려온다."
+NARR: "예배 후. 사람들이 빠져나간다."
+NARR: "복도에 플레이어만 남는다."
 
-SHOW: abigail default
-NARR: "아비게일이 앞줄에 앉아 있다. 두 손을 앞에 모으고."
-NARR: "눈이 마주쳤다. 그 아이는 고개를 숙였다."
+SFX: sfx_window_rattle
+SFX: sfx_map_unfold
+NARR: "창문 너머에서 낮은 목소리."
 
-HIDE: abigail
+CORWIN: (창문 너머) "강변 쪽 주인이 누구지?"
 
-STAT: 신앙 +20
-STAT: 평판 +10
-STAT: 정신력 -10
+NARR: "플레이어가 멈춘다."
 
 END_SCENE
 
 
 SCENE: stage1_B_02
-BG: bg_church_corridor_shadow.jpg
-BGM: bgm_ep01_theme_tense
-SFX: sfx_footsteps_stop
+BG: bg_salem_meetinghouse_corridor.jpg
+BGM: bgm_hymn_distant
+SFX: sfx_distant_footsteps_approaching
 
-NARR: "예배가 끝났다. 나가려다 멈췄다."
-NARR: "측면 복도. 두 남자의 목소리."
+NARR: "반대편 복도에서 성도가 걸어온다."
+NARR: "코윈의 목소리는 계속된다. 이동도 못 한다."
 
-SHOW: corwin stern
-CORWIN: "지주 여성은 어차피 처형되면 토지가 몰수되지."
-CORWIN: "강변 쪽 200에이커. 기소 전에 처리해두면 좋겠어."
+SFX: sfx_finger_tapping_map
+NARR: "손가락이 무언가를 두드리는 소리."
 
-SFX: sfx_footsteps_departing
-HIDE: corwin
+NARR: "성도와 눈이 마주친다."
+NARR: "성도가 그냥 지나간다."
+NARR: "플레이어는 숨을 참는다."
 
-NARR: "코윈 판사. 그가 말한 강변 쪽 200에이커—"
-NARR: "당신의 땅이다."
-
-END_SCENE
-
-
-SCENE: stage1_B_03
-BG: bg_elizabeth_house_interior.jpg
-BGM: bgm_ep01_theme_tense
-SFX: sfx_quill_writing_fast
-
-NARR: "집에 뛰어 들어왔다."
-NARR: "아들이 부엌 바닥에 앉아 있다. 여섯 살."
-NARR: "손이 떨렸다. 잉크가 번졌다."
-
-SHOW: orphea default
-ORPHEA: "꽤 비열한 방법입니다. 그래서 효과적이죠."
-HIDE: orphea
-
-NARR: "강변 농지 200에이커 양도 서류. 기소일 이전 날짜."
-NARR: "수혜자: 아들. 도장을 찍었다."
-
+STAT: 신앙 +20
+STAT: 평판 +10
+STAT: 정신력 -10
 ITEM_GET: land_deed_info
 
 GOTO: stage1_end
 END_SCENE
 
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STAGE 1 — C: 고양이 고발 (웃긴 선택지)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 SCENE: stage1_C_01
-BG: bg_salem_street_morning.jpg
-BGM: bgm_ep01_theme_calm
-SFX: sfx_cat_meow
+BG: bg_salem_village_street.jpg
+BGM: bgm_village_ambient
+SFX: sfx_cat_movement
 
-NARR: "이웃집 검은 고양이. 이름은 없다."
-NARR: "어젯밤 창문 밖을 서성이던 그 녀석."
+NARR: "이웃집 처마 아래. 검은 고양이가 눈을 감고 있다."
+NARR: "지나가던 마을 사람이 성호를 긋는다."
 
-SFX: sfx_quill_writing
-NARR: "고발장에 '검은 고양이, 사역자 추정'이라 썼다."
-NARR: "법원 접수창구 서기가 눈을 깜빡였다. 그래도 접수했다."
-
+SHOW: townsperson_01 fearful
 END_SCENE
 
 
 SCENE: stage1_C_02
-BG: bg_salem_courthouse_exterior.jpg
-BGM: bgm_ep01_theme_calm
-SFX: sfx_crowd_murmur
+BG: bg_salem_village_street.jpg
+BGM: bgm_village_ambient
+SFX: sfx_crowd_gather
 
-SHOW: orphea slight_smile
+NARR: "고발이 접수된다."
+NARR: "서기가 받아 적는다. 너무 자연스럽게."
+
+NARR: "고양이 주인이 말하려 한다."
+NARR: "주변 시선이 쏠린다. 입이 닫힌다."
+
+NARR: "아무도 웃지 않는다."
+
+END_SCENE
+
+
+SCENE: stage1_C_03
+BG: bg_salem_village_street.jpg
+BGM: bgm_village_ambient
+
+SHOW: orphea default
 ORPHEA: "고양이를 고발하셨군요. 역사적으로 검증된 방법입니다."
-ORPHEA: "티투바의 증언에도 붉은 고양이, 검은 개가 악마의 사역자로 기록되었죠."
 HIDE: orphea
 
-NARR: "고양이 주인이 먼저 심문을 받게 되었다."
-NARR: "당신에게는 잠깐의 시간이 생겼다."
+NARR: "예배당 창문 너머로 아비게일이 이쪽을 바라보고 있다."
+NARR: "표정이 없다."
 
 STAT: 평판 -10
+
+END_SCENE
+
+
+SCENE: stage1_C_04
+BG: bg_salem_village_street.jpg
+BGM: bgm_village_ambient_quiet
+
+NARR: "고양이 주인이 골목에서 플레이어와 마주친다."
+NARR: "원망 없이 하늘을 본다."
+NARR: "한참 후에 안으로 들어간다."
+NARR: "플레이어는 그 등을 본다."
 
 GOTO: stage1_end
 END_SCENE
 
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STAGE 1 — 합류
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 SCENE: stage1_end
-BG: bg_salem_street_evening.jpg
-BGM: bgm_ep01_theme_calm
-SFX: sfx_wind_low
+BG: bg_salem_village_night.jpg
+BGM: bgm_night_wind
+SFX: sfx_night_crickets
 
-NARR: "저녁이 되었다."
-NARR: "마을 전체가 조용했다. 조용한 것이 더 무서웠다."
+NARR: "밤. 마을이 조용하다."
+NARR: "창마다 불빛이 하나씩 꺼진다."
 
 SHOW: orphea default
-ORPHEA: "기록 동기화 완료."
-ORPHEA: "아직 살아 계시는군요. 흥미롭지는 않습니다만."
+ORPHEA: "오늘 하루 기록이 완료됐습니다."
+ORPHEA: "역사는 대개 이런 하루들로 이루어져 있습니다. 아무도 기억하지 않는."
 HIDE: orphea
 
 GOTO: stage2_entry
 END_SCENE
-```
+
+---
+<!-- S2 이하 집필 예정 -->
