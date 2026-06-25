@@ -8,16 +8,15 @@ BG: bg_black.jpg
 BGM: bgm_void_hum
 SFX: sfx_static_low
 
-NARR: "가죽이 눈을 덮는다. 시야가 까맣게 닫힌다."
-NARR: "가죽 냄새. 땀. 무언가 오래된 것이 타는 냄새."
-THINK: "헤드셋 무게치고는 좀 무거운데."
-
 SHOW: orphea default
-ORPHEA: "Archive Oculus. 역사 생존 시뮬레이션."
+ORPHEA: "Orphea Archive. 역사 생존 시뮬레이션."
 ORPHEA: "인스턴스 로드 중."
 ORPHEA: "세일럼 마을. 1692년 6월."
 ORPHEA: "경고. 이 시뮬레이션에서 침묵은 유죄의 증거입니다."
 HIDE: orphea
+
+NARR: "부드러운 가죽이 눈을 덮는다. 시야가 까맣게 닫힌다."
+NARR: "가죽 냄새. 땀. 무언가 오래된 것이 타는 냄새."
 
 END_SCENE
 
@@ -27,8 +26,11 @@ BG: bg_salem_meetinghouse_interior.jpg
 BGM: bgm_crowd_tension
 SFX: sfx_crowd_murmur_close
 
-NARR: "눈을 뜬다. 예배당 안이다. 사람이 너무 많다."
+NARR: "매캐한 연기냄새가 코를 찌른다. 축축한 땅 내음과 짐승의 냄새에 속이 울렁거린다. 당신은 눈을 뜬다. 실내는 어둡다. 작은 유리조각들이 촘촘히 연결된 창문 사이로 희미한 햇빛이 들어온다. 뿌옇던 시야가 밝아진다. 웅성거리는 소리가 들린다. 낮은 천장, 좁은 실내 공간안에 사람들이 가득 차있다."
 NARR: "양초 연기가 목을 긁는다. 젖은 울 냄새. 누군가의 팔꿈치가 등을 민다."
+???: "거 밀지 맙시다."
+player: "아, 네 죄송합니다."
+narr: "당신은 
 THINK: "화질 좋네. 냄새까지 나는 건 좀 과한데."
 
 SHOW: orphea default
