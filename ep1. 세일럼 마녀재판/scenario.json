@@ -241,8 +241,9 @@
         }
       ],
       "stat_trigger": {
-        "condition": "sanity <= 30",
-        "effect": "환각 연출 강화. 선택지 텍스트 변화."
+        "condition": "flag: ergot_infected",
+        "effect": "환각 연출 (stage2_A 검은 형체 IF 블록으로 구현).",
+        "revision_note": "구 조건 sanity<=30은 S2 시점 도달 불가(경로 최저 70)로 죽은 설계 — 2026-07-07 ergot 플래그 조건으로 교체."
       },
       "choices": [
         {
@@ -288,6 +289,21 @@
           "downstream_effect": {
             "type": "instant_death_route",
             "description": "심문장 아수라장(소녀들 일제 발작) → 재판 요식 진행 몽타주 → 단축 사망 엔딩."
+          }
+        },
+        {
+          "id": "E",
+          "role": "함정 (아이템 오용)",
+          "text": "\"서류가 있습니다. 토지는 이미 양도했어요.\"",
+          "required_item": "land_deed_info",
+          "locked_if_missing": true,
+          "immediate_effects": { "defense": -20 },
+          "trap_fact": "재산 증거 서류 제시 = 재판관이 재산 규모를 파악하는 역효과 + 기소 전 재산 이전 = 계획성 증거로 역해석 (fact_sheet 함정 4번)",
+          "downstream_effect": {
+            "type": "item_lose",
+            "item": "land_deed_info",
+            "target_stage": "final",
+            "description": "서류 증거물 압수(ITEM_LOSE) → 최종관문 C 자동 잠김(아이템 부재). 올바른 도구, 틀린 타이밍 — 방패는 꺼내 보이는 순간 과녁이 된다. B경로 플레이어에게만 표시."
           }
         }
       ]
@@ -530,5 +546,5 @@
   },
 
   "lock_status": "LOCKED",
-  "revision_note": "2026-07-07 교육성·스탯 개정 (사용자 지시): (1) 선택지마다 역사 팩트 ≥1 매핑 원칙 — 팩트 없는 선택지 삭제(메리 눈맞춤 → 연출로 강등). (2) 미사용 지뢰 투입: 터치 테스트(final entry_event), 프레싱(final D), 맥각 과다(S2 overeat), 고발자 반박(S2 D), 임신부 유예(교육 드롭 대사). (3) 최종관문 이전 치명 루트 2개 신설(ergot_death, mock_death). (4) 스탯 게이트 신설 — 4스탯 전부 최종관문에서 읽힘(stat_gates). 정신력 붕괴 시 tainted_survival 변형. / 2026-07-06 구조 개정: stage1 entry/exit_event, 코윈 3단 등장, B분기 작성 장면 필수화."
+  "revision_note": "2026-07-07 추가 개정: S2-E 아이템 오용 함정(서류 조기 제시 → 압수·퍼펙트 소멸, fact_sheet 함정4), S2 stat_trigger 죽은 조건(sanity<=30 도달불가) → ergot 플래그로 교체, 강제사망 경고는 no_escape 의사조건(빌드 계산)으로 전환. / 2026-07-07 교육성·스탯 개정 (사용자 지시): (1) 선택지마다 역사 팩트 ≥1 매핑 원칙 — 팩트 없는 선택지 삭제(메리 눈맞춤 → 연출로 강등). (2) 미사용 지뢰 투입: 터치 테스트(final entry_event), 프레싱(final D), 맥각 과다(S2 overeat), 고발자 반박(S2 D), 임신부 유예(교육 드롭 대사). (3) 최종관문 이전 치명 루트 2개 신설(ergot_death, mock_death). (4) 스탯 게이트 신설 — 4스탯 전부 최종관문에서 읽힘(stat_gates). 정신력 붕괴 시 tainted_survival 변형. / 2026-07-06 구조 개정: stage1 entry/exit_event, 코윈 3단 등장, B분기 작성 장면 필수화."
 }
