@@ -136,3 +136,6 @@
 | 총독 부인 Lady Phips 고발 | Northeastern University | https://news.northeastern.edu/2023/10/18/salem-witch-trials-history-truth | ✅ 높음 |
 | JSTOR 학술 자료 | JSTOR | https://daily.jstor.org/caused-salem-witch-trials/ | ✅ 높음 |
 | 재판 거부 시 프레싱 전략 (재산 보호 목적) | blogs.loc.gov | https://blogs.loc.gov/law/2020/10/the-crushing-death-of-giles-corey-of-salem-1692/ | ✅ 높음 |
+| 1697년 재판관 새뮤얼 시월(Samuel Sewall) 공개 사과 — 보스턴 올드사우스 교회 참회문 | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 미검증 (에필로그 사용) |
+| 1706년 고발자 앤 퍼트넘 Jr. 공개 사과 — 고발 소녀 중 유일 | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 미검증 (에필로그 사용) |
+| 아비게일 윌리엄스 — 재판 이후 행적 기록 없음 | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 미검증 (에필로그 사용) |
