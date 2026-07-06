@@ -54,7 +54,6 @@ SHOW: orphea slight_smile
 ORPHEA: "아, 제가 아직 말씀 안드렸나요? 당신의 그냥 이곳에서 살아남으면 됩니다. 간단하죠?"
 think: "뭐? 나 과부라며. 애까지 딸렸다며! 혼자서 어떻게 애 키우고 먹고살아?"
 orphea: "괜찮아요. 남편은 죽었지만, 그 죽은 남편이 남긴 것이 아주 많으니까."
-think: "
 HIDE: orphea
 
 END_SCENE
@@ -65,24 +64,29 @@ BG: bg_salem_meetinghouse_interior.jpg
 BGM: bgm_crowd_tension
 SFX: sfx_crowd_breath
 
-think: 
-NARR: "군중의 시선이 앞쪽 한 곳에 모여 있다."
-NARR: "열두어 살쯤 된 소녀. 두 손을 앞에 모으고 고개를 숙이고 있다."
-THINK: "조용한 애네. 순해 보이는데."
+narr: "목사의 설교는 길고 지루하다. 당신은 집중하지 못하고 몸을 이리저리 뒤틀며 눈을 굴린다. 주변의 이웃들은 모두 진지한 얼굴로 설교에 집중하고 있다."
+think: "와... 무슨 말을 하는거야. 진짜 길다. 목사님 유투브에는 재능 없는듯."
+NARR: "한바탕 설교가 마무리되고, 한무리 아이들이 앞으로 나온다. 연단 한편에 줄 맞춰 선다. 사람들의 시선이 그쪽으로 모인다."
+NARR: "중앙에 선 아이가 당신을 바라봅니다. 눈이 마주칩니다. 당신은 머쓱한 듯 미소짓습니다."
+THINK: "누구지. 아는 애인가? 아는 척 해야하나?"
 
 SHOW: abigail default
 SFX: sfx_abigail_gasp
+
+narr: "당신과 눈이 마주친 소녀가의 얼굴이 사색이 됩니다. 소녀는 당신의 눈을 피하며 주변을 두리번거립니다."
+
 SHOW: abigail vacant
 SHOW: abigail hysteria
 SFX: sfx_abigail_scream
 
-ABIGAIL: "저기 있어요. 저기—"
-ABIGAIL: "저 사람이요. 어젯밤에 제 방에 왔어요."
+narr: "소녀가 공포에 질린 듯 비명을 지르며 몸을 떤다. 눈은 뒤집히고 목에는 핏대가 섰다. 날카로운 비명에 놀란 아이들이 소녀에게서 멀찍이 떨어진다."
+ABIGAIL: "저기 있어요! 저기—"
+ABIGAIL: "엘리자베스!  어젯밤에 제 방에 왔어요."
 
 SFX: sfx_crowd_gasp
 NARR: "손가락이 허공을 가리킨다."
 NARR: "그 끝이 향한 방향에 당신이 서 있다."
-THINK: "나 아니지? 저 손가락, 나 가리키는 거 아니지?"
+THINK: "뭐, 뭐야? 이게 무슨 상황이야? 나? 나 아니지? 저 손가락, 나 가리키는 거 아니지?"
 
 END_SCENE
 
@@ -92,7 +96,7 @@ BG: bg_salem_meetinghouse_interior.jpg
 BGM: bgm_crowd_tension
 SFX: sfx_crowd_shift
 
-NARR: "주변 여성들이 남편 쪽으로 바짝 붙는다. 말 없이. 한 명씩."
+NARR: "당신 주변에 사람주변 여성들이 남편 쪽으로 바짝 붙는다. 말 없이. 한 명씩."
 THINK: "다들 한 발씩 물러나는데. 나만 남는다."
 
 SHOW: abigail hysteria
