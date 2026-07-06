@@ -378,7 +378,7 @@
         "note": "어느 쪽도 이길 수 없음. 직후 오르페아가 검사의 논리를 해부(각 결과 씬 1줄)."
       },
       "stat_gates": [
-        { "stat": "sanity",     "condition": "<= 30", "effect": "법정 환각(검은 형체) 재발 — ergot_infected 플래그 시 무조건 발동. B(자백) 선택 시 이름 통제 실패 → tainted_survival 변형." },
+        { "stat": "sanity",     "condition": "<= 50", "effect": "법정 환각(검은 형체) 재발 — ergot_infected 플래그 시 무조건 발동. B(자백) 선택 시 이름 통제 실패 → tainted_survival 변형.", "balance_note": "2026-07-07 시뮬레이션 결과 B자격자(S3-A 경유) 최저 정신력 = 50 (S1-B -10 + eat -20 + S2-B -20). 30이면 도달 불가 = 죽은 콘텐츠라 50으로 조정." },
         { "stat": "reputation", "condition": "<= 30", "effect": "방청석 적대 연출(등 뒤의 침묵이 벽이 됨)." },
         { "stat": "faith",      "condition": ">= 90", "effect": "방청석 일부 술렁('저 여잔 기도회에 나왔어') — 미세 완화 연출." },
         { "stat": "defense",    "condition": "<= 0",  "effect": "사망 엔딩에서 판결→처형 8일(브리짓 비숍 속도 팩트). 그 외 수 주 유예." }
@@ -473,8 +473,8 @@
     {
       "id": "forced_death",
       "label": "강제 사망 (누적 지뢰)",
-      "trigger_condition": "stage1_choice == 'A' AND stage3_choice == 'B'",
-      "scene_beat": "최종관문 진입 시 B/C 모두 비활성. A만 남음. 탈출 불가.",
+      "trigger_condition": "stage1_choice IN ['A','C'] AND stage3_choice IN ['B','C'] (2026-07-07 일반화 — B·C 동시 잠금 조합은 4개: 탄원/고양이 × 거절/뇌물)",
+      "scene_beat": "최종관문 진입 시 B/C 모두 비활성. A/D만 남음. 탈출 불가.",
       "npc_resolution": "death 엔딩과 동일",
       "orphea_tone": "선택지 제시 전 1줄 경고.",
       "orphea_line": "기록상 탈출 경로가 없습니다. 그래도 들어가시겠습니까."
@@ -509,7 +509,7 @@
     {
       "id": "tainted_survival",
       "label": "오염된 생존 (정신력 붕괴 변형)",
-      "trigger_condition": "final_choice == 'B' AND sanity <= 30",
+      "trigger_condition": "final_choice == 'B' AND sanity <= 50",
       "scene_beat": "프루던스 다음을 코윈이 추궁. 환각 속에서 통제 실패 — 산 사람의 이름(메리, sacrifice_eligible)이 튀어나온다. 살아남지만, 에필로그에 대가가 명시된다.",
       "npc_resolution": { "mary": "방청석에서 의자 넘어지는 소리. 이름이 불린 순간." },
       "orphea_tone": "독설 없음. 더 무겁게.",
