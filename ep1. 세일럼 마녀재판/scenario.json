@@ -64,7 +64,7 @@
       "name": "조너선 코윈",
       "role": "boss",
       "historical": true,
-      "appears_in": ["final"],
+      "appears_in": ["stage1_B_voice_only", "stage2", "final"],
       "sacrifice_eligible": false,
       "betrayal_trigger": null,
       "conditional_behavior": {
@@ -107,32 +107,47 @@
     {
       "id": "opening",
       "label": "오프닝",
-      "location": "세일럼 빌리지, 새벽",
+      "location": "세일럼 빌리지, 예배당",
+      "procedural_state": "자유민 → 공개 지목됨 (법적 절차 아직 없음)",
       "entry_event": null,
       "choices": null,
-      "notes": "선택지 없음. 아비게일 발작 현장. 오르페아 등장. 신분 부여. 스탯 초기화.",
-      "orphea_line": "축하드려요. 1692년 세일럼에 접속하셨습니다. 생존 확률 23%. 역사적으로 인기 있는 자살 루트입니다."
+      "notes": "선택지 없음. 예배당 발작 현장 — 아비게일이 플레이어를 이름으로 직접 지목. 오르페아 등장. 신분 부여. 스탯 초기화. 예배당 밖에서 아들과 재회(정서 앵커).",
+      "orphea_line": "축하합니다. 당신은 1692년 세일럼에 접속하셨습니다."
     },
 
     {
       "id": "stage1",
-      "label": "의심의 씨앗",
+      "label": "고발장 — 체포 전 마지막 하루",
       "location": "마을",
       "context": ["공동체", "젠더", "정보/소문"],
       "choice_type": "인물 관련",
       "trap_choice_id": "A",
-      "entry_event": null,
+      "procedural_state": "공개 지목됨 → 정식 고발됨(entry_event) → 체포됨(exit_event)",
+      "entry_event": {
+        "id": "complaint_news",
+        "trigger": "오프닝 다음 날 아침, 집 마당",
+        "situation": "메리가 급히 찾아온다. 패리스 목사 측이 치안판사에게 정식 고발장을 접수했고, 체포영장이 곧 발부된다는 소식. 남은 시간은 하루.",
+        "note": "이 이벤트가 세 선택지 전부의 인과적 근거다 — 모든 선택지는 '체포 전 마지막 하루의 대응'. 메리의 탄원서 제안도 여기서 나온다(정식 고발이 존재하므로 탄원의 대상이 생김)."
+      },
+      "exit_event": {
+        "id": "arrest",
+        "trigger": "선택 분기 결과 씬 종료 후, 그날 밤",
+        "situation": "한밤. 문 두드리는 소리. 체포영장 집행. 아들과 분리. 어떤 선택을 했어도 체포는 온다 — 낮의 대응이 무력화되는 순간.",
+        "state_change": "자유민 → 구금",
+        "orphea_line": "생존 확률 23%. 역사적으로 인기 있는 자살 루트입니다.",
+        "note": "'승'의 절정. 오르페아 23% 라인은 이 순간으로 이동(오프닝에서 제거). B 선택 시 서류 작성 직후 체포가 와서 긴장 최대화."
+      },
       "choices": [
         {
           "id": "A",
           "role": "함정",
-          "text": "메리와 함께 탄원서를 써서 아비게일을 거짓말쟁이로 고발한다",
+          "text": "메리와 함께 마을 사람들의 서명을 모은 결백 탄원서를 제출한다",
           "hook_tag": null,
           "immediate_effects": { "reputation": -30, "stage2_target_intensity": 1 },
           "downstream_effect": {
             "type": "npc_change",
             "target_stage": "final",
-            "description": "메리 배신 트리거 ON. 방청석에서 공범 지목 증언."
+            "description": "메리 배신 트리거 ON. 방청석에서 공범 지목 증언. 서명인 명단이 공범 명단으로 전용됨."
           }
         },
         {
@@ -145,7 +160,7 @@
             "type": "item_grant + event_trigger",
             "item": "land_deed_info",
             "target_stage": "stage1_return + final",
-            "description": "예배 후 코윈 음모 엿들음 → 토지 양도 서류 작성. 퍼펙트 엔딩 경로 활성."
+            "description": "예배 후 코윈 목소리 엿들음('강변 쪽 땅 주인이 누구지') → 위협 인지 → 그날 밤 귀가 후 토지 양도 서류 작성 씬(필수 — 작성 장면 없이 ITEM_GET 금지) → 서류 숨긴 직후 체포(exit_event). 퍼펙트 엔딩 경로 활성."
           }
         },
         {
@@ -167,15 +182,17 @@
 
     {
       "id": "stage2",
-      "label": "체포/심문",
+      "label": "예비심문",
       "location": "심문실",
       "context": ["법/제도", "종교", "과학/의학"],
       "choice_type": "역사적 함정 + 스탯 돌발상황",
       "trap_choice_id": "C",
+      "procedural_state": "구금(체포 직후) → 예비심문 받음",
+      "interrogator": "코윈 (실물 첫 등장. 역사 고증: 1692 예비심문 주재는 호손·코윈 치안판사. S1-B 분기 플레이어는 문 너머로 들은 목소리를 여기서 알아차림. 코윈 3단 등장 구조: S1 목소리 → S2 심문 → 최종관문 재판)",
       "entry_event": {
         "id": "ergot_bread",
         "trigger": "stage2 진입 직전",
-        "situation": "심문실 대기 중. 배가 고프다. 옆에 놓인 빵 한 조각. (호밀빵 — 맥각균 오염 가능)",
+        "situation": "체포된 밤이 지나고 심문 대기 중. 배가 고프다. 옆에 놓인 빵 한 조각. (호밀빵 — 맥각균 오염 가능)",
         "choices": [
           {
             "id": "eat",
@@ -243,6 +260,7 @@
       "id": "stage3",
       "label": "감옥",
       "location": "세일럼 감옥",
+      "procedural_state": "예비심문 종료 → 재판 대기 구금 (심문 결과 기소 유지, 본 감옥 이송)",
       "context": ["경제", "공동체"],
       "choice_type": "아이템/정보 획득 + 인물 관련",
       "trap_choice_id": "B",
@@ -321,6 +339,7 @@
       "id": "final",
       "label": "법정",
       "location": "세일럼 법정",
+      "procedural_state": "재판 대기 → 본 재판 (Oyer and Terminer)",
       "context": ["법/제도", "젠더", "경제"],
       "choice_type": "역사적 함정 집중 + 아이템 활용",
       "trap_choice_id": "A",
@@ -426,5 +445,6 @@
     "final":  "A"
   },
 
-  "lock_status": "LOCKED"
+  "lock_status": "LOCKED",
+  "revision_note": "2026-07-06 구조 개정: (1) stage1에 entry_event(정식 고발 소식)·exit_event(한밤 체포) 추가 — 자유민→구금 상태 점프 해소. (2) 탄원서를 '정식 고발에 대한 대응'으로 리프레임. (3) 코윈 3단 등장(S1 목소리→S2 심문 실물→final 재판). (4) 오르페아 23% 라인을 체포 순간으로 이동. (5) B분기 서류 '작성 장면' 필수화. 선택지 구성·아이템·엔딩 구조는 불변."
 }
