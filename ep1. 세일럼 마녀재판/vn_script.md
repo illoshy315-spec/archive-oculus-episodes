@@ -583,12 +583,14 @@ THINK: "어? 잠깐... 괜찮은 방법일지도?"
 NARR: "당신은 의도적으로 무릎에서 힘을 뺀다. 털썩. 차가운 바닥이 뺨에 닿는다."
 NARR: "쓰러지면서 생각한다 — 그 애가 어떻게 했더라? 눈을 뒤집고, 목에 핏대를 세우고."
 PLAYER: "보여요... 지금도 보여요! 검은 형체가— 아직도 저를 따라다닌다고요. 저도 악마를 봤습니다!"
-NARR: "당신은 벌벌 떠는 척하면서 바닥을 기어간다. 눈을 뒤집어 보려고 노력하지만 쉽지 않다. 시야가 휙휙 변하는 와중. 방 구석에 검은 형체가 눈에 들어온다."
+NARR: "당신은 벌벌 떠는 척하면서 바닥을 기어간다. 눈을 뒤집어 보려고 노력하지만 쉽지 않다."
 
+IF: ergot_infected
+NARR: "시야가 휙휙 변하는 와중. 방 구석에 검은 형체가 눈에 들어온다."
 SHOW: 검은 형체
 HIDE: 검은 형체
-
 THINK: "어? 저건 뭐지?"
+ENDIF
 
 SFX: sfx_chair_scrape
 NARR: "당신의 갑작스러운 쇼를 보고 보조가 벌떡 일어난다. 코윈은 일어나지 않는다. 안경 너머로 당신을 꿰뚫어볼 뿐."
@@ -600,7 +602,13 @@ STAT: 신앙 +30
 SHOW: orphea slight_smile
 ORPHEA: "훌륭한 발작이었습니다. 박수를 쳐드리고 싶군요. ...연기 맞죠?"
 HIDE: orphea
+
+IF: ergot_infected
 THINK: "......연기였어. 연기였을 거야. 근데 아까 그 검은 형체, 뭐지. 진짜 본 것같은데."
+ENDIF
+IF: NOT ergot_infected
+THINK: "연기죠. 그럼요. 완벽한 연기였어요."
+ENDIF
 
 GOTO: stage3_entry
 END_SCENE
@@ -841,7 +849,7 @@ GOTO: final_entry
 END_SCENE
 
 <!-- CHOICE [REQ: 아이템] 표기: 해당 아이템 미보유 시 선택지 자체가 표시되지 않음. (step5 빌드 시 구현) -->
-<!-- IF 조건 확장: 스탯 비교(예: IF: 정신력 <= 30, IF: 신앙 >= 90)와 final_choice 참조 허용. (step5 빌드 시 구현) -->
+<!-- IF 조건 확장: 스탯 비교(예: IF: 정신력 <= 30, IF: 신앙 >= 90), final_choice 참조, 플래그(ergot_infected)와 NOT 연산 허용. (step5 빌드 시 구현) -->
 
 SCENE: final_entry
 BG: bg_salem_courthouse.jpg
@@ -1310,7 +1318,9 @@ END_SCENE
   - 터치 테스트가 방어력 -20/-10로 스탯에 실시간 개입
 □ 신규 사망 씬 오르페아: 전부 조롱 아닌 건조한 팩트 착지 (유머 예산 0 유지).
 □ 프레싱 씬에서 하얀 돌 대비 회수 추가: "세상에서 가장 가벼운 돌 하나."
-□ IF 조건 확장: 스탯 비교·final_choice 참조 (파일 상단 주석, step5 구현 항목).
+□ IF 조건 확장: 스탯 비교·final_choice 참조·플래그(ergot_infected)·NOT (파일 상단 주석, step5 구현 항목).
+□ 검은 형체(stage2_A) ergot_infected 연동 (2026-07-07 사용자 지적): 빵을 먹은 경우에만 환각 노출.
+  미감염 시 THINK 대체("완벽한 연기였어요"). final_main 환각은 정신력 게이트로 별도 작동.
 
 [복선 심기 로그]
   타입B: 메리 강변 시선(stage1_entry_02) — 회수: 최종관문.
