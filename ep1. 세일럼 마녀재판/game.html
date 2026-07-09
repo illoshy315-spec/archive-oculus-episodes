@@ -48,6 +48,20 @@
   #transition.active{ animation:scenecut 0.7s ease; }
   @keyframes scenecut{ 0%{opacity:0;} 40%{opacity:1;} 60%{opacity:1;} 100%{opacity:0;} }
 
+  #timeskipCard{
+    position:absolute; inset:0; z-index:9; background:#000;
+    display:none; align-items:center; justify-content:center; cursor:pointer;
+  }
+  #timeskipCard.show{ display:flex; animation:cardFade 0.5s ease; }
+  #timeskipCard .line{ width:1px; height:0; background:var(--accent); margin-bottom:18px; animation:lineGrow 0.6s ease forwards 0.15s; }
+  @keyframes lineGrow{ to{ height:36px; } }
+  #timeskipText{
+    color:var(--text-main); font-size:26px; letter-spacing:0.12em;
+    opacity:0; animation:cardTextIn 0.6s ease forwards 0.3s; text-align:center;
+  }
+  @keyframes cardFade{ from{opacity:0;} to{opacity:1;} }
+  @keyframes cardTextIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
   #charLayer{
     position:relative; z-index:2; flex:1; display:flex; align-items:flex-end; justify-content:center;
     gap:24px; padding:24px; flex-wrap:wrap;
@@ -148,6 +162,7 @@
   <div id="bg"></div>
   <div id="flash"></div>
   <div id="transition"></div>
+  <div id="timeskipCard"><div><div class="line"></div><div id="timeskipText"></div></div></div>
   <div id="topBar">
     <div id="stats"></div>
     <div style="display:flex; align-items:center; gap:10px;">
@@ -229,7 +244,7 @@ function freshState(){
     choices: {}, // stage1_choice 등
     visibleChars: new Set(),
     currentBg: null,
-    textQueue: [],
+    showingTimeskip: false,
     lastLine: null,
     ended: false
   };
@@ -303,22 +318,15 @@ function transitionEffect(){
   const t = $('#transition'); t.classList.remove('active'); void t.offsetWidth; t.classList.add('active');
 }
 function setBg(name){ $('#bg').style.background = bgStyleFor(name); }
-
-// 문장 단위 텍스트 분할 — 긴 NARR/THINK/대사 한 줄을 텍스트박스 분량(약 2~3줄)씩 순차 출력한다.
-// 원본 대본은 건드리지 않고, 렌더링 시점에만 나눈다.
-function splitTextChunks(text){
-  const sentences = text.match(/[^.!?…]+[.!?…]*/g) || [text];
-  const budget = 55;
-  const chunks = [];
-  let cur = '';
-  for (const raw of sentences){
-    const s = raw.trim();
-    if (!s) continue;
-    if (cur && (cur.length + s.length + 1) > budget){ chunks.push(cur); cur = s; }
-    else { cur = cur ? cur + ' ' + s : s; }
-  }
-  if (cur) chunks.push(cur);
-  return chunks.length ? chunks : [text];
+function showTimeskip(text){
+  state.showingTimeskip = true;
+  $('#timeskipText').textContent = text;
+  $('#timeskipCard').classList.add('show');
+  $('#choices').innerHTML=''; $('#advanceHint').style.visibility='hidden';
+}
+function hideTimeskip(){
+  state.showingTimeskip = false;
+  $('#timeskipCard').classList.remove('show');
 }
 
 // ---------- 라인 처리 ----------
@@ -397,12 +405,8 @@ function runUntilBlocking(){
     if (l.t === 'FLAG_SET'){ state.flags.add(l.v); state.lineIdx++; continue; }
     if (l.t === 'GOTO'){ gotoScene(l.v); continue; }
 
-    if (l.t === 'TEXT'){
-      const chunks = splitTextChunks(l.text);
-      state.textQueue = chunks.slice(1);
-      renderText(l, chunks[0]);
-      return;
-    }
+    if (l.t === 'TIMESKIP'){ showTimeskip(l.v); return; }
+    if (l.t === 'TEXT'){ renderText(l); return; }
     if (l.t === 'CHOICE'){ renderChoices(l); return; }
 
     // UNKNOWN 등은 건너뜀
@@ -410,16 +414,15 @@ function runUntilBlocking(){
   }
 }
 
-function renderText(l, chunkText){
+function renderText(l){
   const speakerEl = $('#speaker'); const textEl = $('#textbox');
   $('#choices').innerHTML='';
   speakerEl.className=''; textEl.className='';
   if (l.speaker === 'NARR'){ speakerEl.textContent=''; speakerEl.className='narr'; textEl.className='narr'; }
   else if (l.speaker === 'THINK'){ speakerEl.textContent='속마음'; speakerEl.className='think'; textEl.className='think'; }
   else { speakerEl.textContent = SPEAKER_NAME[l.speaker] || l.speaker; }
-  textEl.textContent = (chunkText !== undefined) ? chunkText : l.text;
-  const hasMore = state.textQueue && state.textQueue.length > 0;
-  $('#advanceHint').textContent = hasMore ? '계속 ▶' : '클릭 / Space ▶';
+  textEl.textContent = l.text;
+  $('#advanceHint').textContent = '클릭 / Space ▶';
   $('#advanceHint').style.visibility='visible';
 }
 
@@ -469,10 +472,11 @@ function checkEndingReached(){
 
 function advance(){
   if (state.ended) return;
-  if (state.textQueue && state.textQueue.length > 0){
-    const scene = currentScene();
-    const l = scene.lines[state.lineIdx];
-    renderText(l, state.textQueue.shift());
+  if (state.showingTimeskip){
+    hideTimeskip();
+    state.lineIdx++; runUntilBlocking();
+    if (checkEndingReached()) return;
+    renderDebug();
     return;
   }
   const scene = currentScene();
@@ -486,6 +490,7 @@ document.getElementById('panel').addEventListener('click', (e)=>{
   if (e.target.closest('.choiceBtn')) return;
   advance();
 });
+document.getElementById('timeskipCard').addEventListener('click', advance);
 document.addEventListener('keydown', (e)=>{ if (e.code==='Space') advance(); });
 document.getElementById('restartBtn').addEventListener('click', start);
 

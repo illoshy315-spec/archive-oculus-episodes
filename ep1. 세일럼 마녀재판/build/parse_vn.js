@@ -45,6 +45,7 @@ for (let raw_i = 0; raw_i < lines.length; raw_i++) {
   if (line.startsWith('ITEM_LOSE:')) { pushLine({ t: 'ITEM_LOSE', v: line.slice(10).trim() }); continue; }
   if (line.startsWith('CLUE_GET:'))  { pushLine({ t: 'CLUE_GET',  v: line.slice(9).trim() }); continue; }
   if (line.startsWith('FLAG_SET:'))  { pushLine({ t: 'FLAG_SET',  v: line.slice(9).trim() }); continue; }
+  if (line.startsWith('TIMESKIP:')) { pushLine({ t: 'TIMESKIP', v: line.slice(9).trim() }); continue; }
   if (line.startsWith('GOTO:'))      { pushLine({ t: 'GOTO', v: line.slice(5).trim() }); continue; }
   if (line.startsWith('IF:'))        { pushLine({ t: 'IF', cond: line.slice(3).trim() }); continue; }
   if (line === 'ENDIF')              { pushLine({ t: 'ENDIF' }); continue; }
