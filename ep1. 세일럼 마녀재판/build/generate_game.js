@@ -156,11 +156,13 @@ const html = `<!DOCTYPE html>
   #endScreen.show{ display:flex; }
   #endScreen h2{ font-size:22px; color:var(--gold); letter-spacing:0.05em; }
   #endScreen p{ color:var(--text-dim); max-width:480px; font-size:13px; }
-  #restartBtn{
+  #restartBtn, #factLink{
     padding:10px 22px; background:none; border:1px solid var(--accent); color:var(--accent);
-    border-radius:6px; cursor:pointer; font-family:inherit; font-size:14px;
+    border-radius:6px; cursor:pointer; font-family:inherit; font-size:14px; text-decoration:none; display:inline-block;
   }
-  #restartBtn:hover{ background:rgba(185,140,255,0.12); }
+  #restartBtn:hover, #factLink:hover{ background:rgba(185,140,255,0.12); }
+  #factLink{ border-color:var(--gold); color:var(--gold); }
+  #endButtons{ display:flex; gap:10px; }
 
   #debugPanel{
     position:absolute; top:0; right:0; width:280px; height:100%; z-index:20;
@@ -197,7 +199,10 @@ const html = `<!DOCTYPE html>
   <div id="endScreen">
     <h2 id="endTitle"></h2>
     <p id="endDesc"></p>
-    <button id="restartBtn">다시 시작</button>
+    <div id="endButtons">
+      <button id="restartBtn">다시 시작</button>
+      <a id="factLink" href="#" target="_blank" rel="noopener" style="display:none;">진짜 역사 보기 →</a>
+    </div>
   </div>
   <div id="debugPanel">
     <h3>DEBUG</h3>
@@ -459,28 +464,39 @@ function renderChoices(l){
   }
 }
 
-function showEnd(title, desc){
+function showEnd(title, desc, factSlug){
   state.ended = true;
   $('#endTitle').textContent = title; $('#endDesc').textContent = desc;
+  const link = $('#factLink');
+  if (factSlug){
+    link.href = FACT_BASE_URL + factSlug;
+    link.style.display = 'inline-block';
+  } else {
+    link.style.display = 'none';
+  }
   $('#endScreen').classList.add('show');
 }
 
+// 사망/엔딩 → orpheaarchive.com 팩트 아카이브 앵커. 에피소드 완성 후 실제 URL 확인할 것.
+const FACT_BASE_URL = 'https://orpheaarchive.com/archive/salem-witch-trials-1692/#';
+
 // game_over/epilogue 씬 도달 시 엔딩 화면으로 전환
-const ENDING_LABELS = {};
 // scenario.json endings는 result_endpoint 기반이라 엔진에서는 간단히 game_over 진입 시점의 최근 서사로 타이틀 추정
 function checkEndingReached(){
   if (state.sceneId === 'game_over'){
     let label = '기록 종료';
+    let factSlug = null;
     // 최근 지나온 씬 흔적 + 최종 상태로 엔딩 라벨 추정 (디버그/QA 편의용 — 실제 서사 판정은 대본이 함)
-    if (state.choices.final_choice === 'A') label = '사망 — 결백 주장';
-    else if (state.choices.final_choice === 'D') label = '사망 — 재판 거부 (프레싱)';
-    else if (state.choices.stage2_choice === 'D') label = '사망 — 고발자 반박';
-    else if ((state.history||[]).includes('stage2_overeat')) label = '사망 — 맥각 중독';
-    else if (state.choices.final_choice === 'C') label = '퍼펙트 엔딩';
+    if (state.choices.final_choice === 'A') { label = '사망 — 결백 주장'; factSlug = 'confess-to-survive'; }
+    else if (state.choices.final_choice === 'D') { label = '사망 — 재판 거부 (프레싱)'; factSlug = 'peine-forte-et-dure'; }
+    else if (state.choices.stage2_choice === 'D') { label = '사망 — 고발자 반박'; factSlug = 'accusing-the-accusers'; }
+    else if ((state.history||[]).includes('stage2_overeat')) { label = '사망 — 맥각 중독'; factSlug = 'ergot-poisoning'; }
+    else if (state.choices.final_choice === 'C') { label = '퍼펙트 엔딩'; factSlug = 'property-motive'; }
     else if (state.choices.final_choice === 'B'){
       label = (state.stats['정신력'] <= 50) ? '일반생존 (오염 — 메리 지목)' : '일반생존 엔딩';
+      factSlug = 'confess-to-survive';
     }
-    showEnd(label, '기록 종료. 새로운 데이터 확보.');
+    showEnd(label, '기록 종료. 새로운 데이터 확보.', factSlug);
     return true;
   }
   return false;
