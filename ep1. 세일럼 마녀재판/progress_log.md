@@ -108,5 +108,9 @@
 2. game.html 실제 브라우저에서 수동 클릭 테스트 (자동화 도구 한계로 최종 확인 필요)
 3. 미검증 fact_sheet 항목 3건 웹서치 확인 (시월 사과·앤 퍼트넘 사과·아비게일 행적) —
    Orphea Archive 팩트 페이지의 "verifying" 태그 항목(touch-test)도 같이 검증하면 좋음
-4. 레오나르도 에셋 제작 (asset_manifest.md 기준) → 파일명 매칭 후 교체 (오디오 포함 시 SFX/BGM 실제 재생 가능)
+4. **레오나르도 에셋 제작 (사용자 진행 예정)**: `assets/README.md` 참고해서 `assets/bg|bgm|sfx|portraits/`에
+   `asset_manifest.md` 파일명 그대로 드롭인 → `node build/generate_game.js` 재실행하면 자동 반영.
+   **2026-07-10 완료**: `generate_game.js`가 빌드 시점에 파일 존재 여부를 스캔해서 있는 것만 실제 로드(BG는
+   이미지+그라데이션 레이어링, 캐릭터는 `<img>`, BGM/SFX는 `<audio>` 재생)하고 없는 건 기존 플레이스홀더로
+   자동 폴백하도록 구현·테스트 완료 (더미 이미지로 BG/초상화 로드 검증함). 부분적으로만 채워도 안전.
 5. Step 6 (OSMU 추출 — 유튜브 대본/숏폼/웹아티클) — web_article.md는 이제 orpheaarchive.com/archive 실사이트로 대체/확장된 상태
