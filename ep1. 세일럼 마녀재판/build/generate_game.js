@@ -12,7 +12,53 @@ for (const v of Object.values(scenario.stats)) { statsInitial[v.label] = v.initi
 const itemLabels = {};
 for (const it of scenario.items) itemLabels[it.id] = it.label;
 
-const DATA = { scenes, statsInitial, statLabels, itemLabels, title: scenario.title, episodeId: scenario.episode_id };
+// ---------- 에셋 자동 감지 (asset_manifest.md 파일명 기준, 빌드 시점 존재 여부 확인) ----------
+// assets/bg/, assets/bgm/, assets/sfx/, assets/portraits/ 에 파일명 그대로(레오나르도 결과물 등) 넣고
+// 이 스크립트를 다시 돌리면, 있는 파일만 실제로 로드되고 없는 건 기존 플레이스홀더(그라데이션/이니셜 배지/무음+토스트)로
+// 자동 폴백됨 — 코드 수정 불필요, 부분적으로만 채워도 안전함.
+const ASSET_ROOT = path.join(__dirname, '..', 'assets');
+function findAsset(subdir, baseName, exts) {
+  for (const ext of exts) {
+    if (fs.existsSync(path.join(ASSET_ROOT, subdir, baseName + ext))) return `assets/${subdir}/${baseName}${ext}`;
+  }
+  return null;
+}
+
+const bgNames = new Set(), bgmNames = new Set(), sfxNames = new Set(), charKeys = new Set();
+for (const scene of scenes) {
+  for (const l of scene.lines) {
+    if (l.t === 'BG') bgNames.add(l.v);
+    else if (l.t === 'BGM') bgmNames.add(l.v);
+    else if (l.t === 'SFX') sfxNames.add(l.v);
+    else if (l.t === 'SHOW' && l.v !== '검은 형체') charKeys.add(l.v);
+  }
+}
+
+const bgAssets = {};
+for (const name of bgNames) {
+  const base = name.replace(/\.[^.]+$/, ''); // bg_xxx.jpg -> bg_xxx
+  const found = findAsset('bg', base, ['.jpg', '.jpeg', '.png', '.webp']);
+  if (found) bgAssets[name] = found;
+}
+const bgmAssets = {};
+for (const name of bgmNames) {
+  const found = findAsset('bgm', name, ['.mp3', '.ogg']);
+  if (found) bgmAssets[name] = found;
+}
+const sfxAssets = {};
+for (const name of sfxNames) {
+  const found = findAsset('sfx', name, ['.mp3', '.ogg', '.wav']);
+  if (found) sfxAssets[name] = found;
+}
+const portraitAssets = {};
+for (const key of charKeys) {
+  const base = key.replace(/\s+/g, '_'); // "abigail hysteria" -> "abigail_hysteria"
+  const found = findAsset('portraits', base, ['.png', '.webp']);
+  if (found) portraitAssets[key] = found;
+}
+console.log(`에셋 감지: BG ${Object.keys(bgAssets).length}/${bgNames.size}, BGM ${Object.keys(bgmAssets).length}/${bgmNames.size}, SFX ${Object.keys(sfxAssets).length}/${sfxNames.size}, 초상 ${Object.keys(portraitAssets).length}/${charKeys.size}`);
+
+const DATA = { scenes, statsInitial, statLabels, itemLabels, title: scenario.title, episodeId: scenario.episode_id, bgAssets, bgmAssets, sfxAssets, portraitAssets };
 
 const html = `<!DOCTYPE html>
 <html lang="ko">
@@ -256,6 +302,17 @@ const BG_STYLE = {
 };
 function bgStyleFor(name){ return BG_STYLE[name] || 'linear-gradient(160deg,#2a2a2a,#0a0a0a)'; }
 
+let bgmAudio = null; // 현재 재생 중인 BGM (다음 BGM 전환 시 정지)
+function playBgm(name){
+  const src = DATA.bgmAssets[name];
+  if (bgmAudio){ bgmAudio.pause(); bgmAudio = null; }
+  if (src){ bgmAudio = new Audio(src); bgmAudio.loop = true; bgmAudio.volume = 0.5; bgmAudio.play().catch(()=>{}); }
+}
+function playSfx(name){
+  const src = DATA.sfxAssets[name];
+  if (src){ const a = new Audio(src); a.volume = 0.7; a.play().catch(()=>{}); }
+}
+
 const CHAR_COLOR = {
   orphea:'#8a4fd9', mary:'#c99a4a', corwin:'#7a2e2e', abigail:'#c9b3c2', marshal:'#5a6270'
 };
@@ -346,9 +403,14 @@ function renderChars(){
   const layer = $('#charLayer'); layer.innerHTML='';
   for (const key of state.visibleChars){
     const [name, expr] = key.split(' ');
-    const color = CHAR_COLOR[name] || '#555';
+    const portrait = DATA.portraitAssets[key];
     const badge = document.createElement('div'); badge.className='charBadge';
-    badge.innerHTML = \`<div class="charCircle" style="background:\${color}">\${name[0].toUpperCase()}</div><div class="charName">\${SPEAKER_NAME[name.toUpperCase()] || name}</div><div class="charExpr">\${expr||''}</div>\`;
+    if (portrait){
+      badge.innerHTML = \`<img src="\${portrait}" alt="\${name}" style="height:min(48vh,420px); max-width:280px; object-fit:contain; filter:drop-shadow(0 8px 16px rgba(0,0,0,0.6));" />\`;
+    } else {
+      const color = CHAR_COLOR[name] || '#555';
+      badge.innerHTML = \`<div class="charCircle" style="background:\${color}">\${name[0].toUpperCase()}</div><div class="charName">\${SPEAKER_NAME[name.toUpperCase()] || name}</div><div class="charExpr">\${expr||''}</div>\`;
+    }
     layer.appendChild(badge);
   }
 }
@@ -358,7 +420,13 @@ function flashEffect(){
 function transitionEffect(){
   const t = $('#transition'); t.classList.remove('active'); void t.offsetWidth; t.classList.add('active');
 }
-function setBg(name){ $('#bg').style.background = bgStyleFor(name); }
+function setBg(name){
+  const asset = DATA.bgAssets[name];
+  const gradient = bgStyleFor(name);
+  $('#bg').style.background = asset
+    ? \`url('\${asset}') center/cover no-repeat, \${gradient}\`
+    : gradient;
+}
 function showTimeskip(text){
   state.showingTimeskip = true;
   $('#timeskipText').textContent = text;
@@ -416,8 +484,8 @@ function runUntilBlocking(){
       state.currentBg = l.v;
       setBg(l.v); state.lineIdx++; continue;
     }
-    if (l.t === 'BGM'){ toast('♪ '+l.v); state.lineIdx++; continue; }
-    if (l.t === 'SFX'){ toast('🔊 '+l.v); state.lineIdx++; continue; }
+    if (l.t === 'BGM'){ playBgm(l.v); if (!DATA.bgmAssets[l.v]) toast('♪ '+l.v); state.lineIdx++; continue; }
+    if (l.t === 'SFX'){ playSfx(l.v); if (!DATA.sfxAssets[l.v]) toast('🔊 '+l.v); state.lineIdx++; continue; }
     if (l.t === 'SHOW'){
       if (l.v === '검은 형체'){ flashEffect(); }
       else {
