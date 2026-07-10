@@ -80,3 +80,10 @@
 - orphea default
 - orphea slight_smile
 - 검은 형체
+
+## UI — 스탯 아이콘/프레임 (5, 2026-07-10 추가)
+- stat_faith.png (신앙)
+- stat_reputation.png (평판)
+- stat_defense.png (법적방어력)
+- stat_sanity.png (정신력)
+- stat_frame.png (4개 스탯 공용 바 프레임)

@@ -7,7 +7,8 @@ const scenario = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'scenario
 
 const statsInitial = {};
 const statLabels = [];
-for (const v of Object.values(scenario.stats)) { statsInitial[v.label] = v.initial; statLabels.push(v.label); }
+const statKeyByLabel = {};
+for (const [key, v] of Object.entries(scenario.stats)) { statsInitial[v.label] = v.initial; statLabels.push(v.label); statKeyByLabel[v.label] = key; }
 
 const itemLabels = {};
 for (const it of scenario.items) itemLabels[it.id] = it.label;
@@ -56,9 +57,18 @@ for (const key of charKeys) {
   const found = findAsset('portraits', base, ['.png', '.webp']);
   if (found) portraitAssets[key] = found;
 }
-console.log(`에셋 감지: BG ${Object.keys(bgAssets).length}/${bgNames.size}, BGM ${Object.keys(bgmAssets).length}/${bgmNames.size}, SFX ${Object.keys(sfxAssets).length}/${sfxNames.size}, 초상 ${Object.keys(portraitAssets).length}/${charKeys.size}`);
 
-const DATA = { scenes, statsInitial, statLabels, itemLabels, title: scenario.title, episodeId: scenario.episode_id, bgAssets, bgmAssets, sfxAssets, portraitAssets };
+const statIconAssets = {};
+for (const label of statLabels) {
+  const key = statKeyByLabel[label];
+  const found = findAsset('ui', `stat_${key}`, ['.png', '.webp']);
+  if (found) statIconAssets[label] = found;
+}
+const statFrameAsset = findAsset('ui', 'stat_frame', ['.png', '.webp']);
+
+console.log(`에셋 감지: BG ${Object.keys(bgAssets).length}/${bgNames.size}, BGM ${Object.keys(bgmAssets).length}/${bgmNames.size}, SFX ${Object.keys(sfxAssets).length}/${sfxNames.size}, 초상 ${Object.keys(portraitAssets).length}/${charKeys.size}, 스탯 아이콘 ${Object.keys(statIconAssets).length}/${statLabels.length}, 프레임 ${statFrameAsset ? 'O' : 'X'}`);
+
+const DATA = { scenes, statsInitial, statLabels, itemLabels, title: scenario.title, episodeId: scenario.episode_id, bgAssets, bgmAssets, sfxAssets, portraitAssets, statIconAssets, statFrameAsset };
 
 const html = `<!DOCTYPE html>
 <html lang="ko">
@@ -151,8 +161,12 @@ const html = `<!DOCTYPE html>
   .statChip{
     display:flex; flex-direction:column; align-items:flex-start; gap:2px; min-width:64px;
   }
-  .statChip .label{ font-size:10px; color:var(--text-dim); }
-  .statChip .barTrack{ width:64px; height:5px; background:rgba(255,255,255,0.12); border-radius:3px; overflow:hidden; }
+  .statChip .label{ font-size:10px; color:var(--text-dim); display:flex; align-items:center; gap:4px; }
+  .statChip .statIcon{ width:14px; height:14px; object-fit:contain; }
+  .statChip .barTrack{
+    width:64px; height:5px; background:rgba(255,255,255,0.12); border-radius:3px; overflow:hidden;
+    background-size:cover; background-position:center;
+  }
   .statChip .barFill{ height:100%; background:var(--accent); transition:width 0.4s ease, background 0.4s ease; }
   .statChip .val{ font-size:10px; color:var(--text-main); }
 
@@ -387,8 +401,11 @@ function renderStats(){
     const v = state.stats[label];
     const init = DATA.statsInitial[label] || 100;
     const pct = Math.max(0, Math.min(100, Math.round((v/Math.max(init,100))*100)));
+    const icon = DATA.statIconAssets[label];
+    const iconHtml = icon ? \`<img class="statIcon" src="\${icon}" alt="" />\` : '';
+    const trackStyle = DATA.statFrameAsset ? \` style="background-image:url('\${DATA.statFrameAsset}')"\` : '';
     const chip = document.createElement('div'); chip.className='statChip';
-    chip.innerHTML = \`<span class="label">\${label}</span><div class="barTrack"><div class="barFill" style="width:\${pct}%"></div></div><span class="val">\${v}</span>\`;
+    chip.innerHTML = \`<span class="label">\${iconHtml}\${label}</span><div class="barTrack"\${trackStyle}><div class="barFill" style="width:\${pct}%"></div></div><span class="val">\${v}</span>\`;
     box.appendChild(chip);
   }
 }
