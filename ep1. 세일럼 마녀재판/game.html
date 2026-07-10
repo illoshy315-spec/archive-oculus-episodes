@@ -148,6 +148,19 @@
   #factLink{ border-color:var(--gold); color:var(--gold); }
   #endButtons{ display:flex; gap:10px; }
 
+  #factCard{
+    display:none; width:100%; max-width:420px; margin:2px 0 6px;
+    background:linear-gradient(180deg, rgba(184,150,79,0.07), transparent 45%), rgba(20,16,11,0.92);
+    border:1px solid #3a2c1c; border-radius:6px; padding:18px 20px; text-align:left;
+    font-family:'Georgia','Noto Serif KR',serif;
+  }
+  #factCard.show{ display:block; }
+  #factCard .fc-no{ font-family:'Courier New',monospace; font-size:10px; letter-spacing:0.15em; color:var(--gold); text-transform:uppercase; margin-bottom:8px; }
+  #factCard .fc-title{ font-size:16px; font-weight:700; color:#f3ead2; margin-bottom:8px; line-height:1.4; }
+  #factCard .fc-hook{ font-style:italic; color:var(--gold); font-size:13px; margin-bottom:12px; line-height:1.5; }
+  #factCard .fc-note-label{ font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.15em; color:#8a2f33; text-transform:uppercase; margin-bottom:3px; }
+  #factCard .fc-note{ border-left:2px solid #8a2f33; padding-left:10px; font-size:12px; color:#c8bda0; font-style:italic; }
+
   #debugPanel{
     position:absolute; top:0; right:0; width:280px; height:100%; z-index:20;
     background:rgba(0,0,0,0.92); border-left:1px solid rgba(255,255,255,0.15);
@@ -183,6 +196,13 @@
   <div id="endScreen">
     <h2 id="endTitle"></h2>
     <p id="endDesc"></p>
+    <div id="factCard">
+      <div class="fc-no" id="fcNo"></div>
+      <div class="fc-title" id="fcTitle"></div>
+      <div class="fc-hook" id="fcHook"></div>
+      <div class="fc-note-label">Orphea's Note</div>
+      <div class="fc-note" id="fcNote"></div>
+    </div>
     <div id="endButtons">
       <button id="restartBtn">다시 시작</button>
       <a id="factLink" href="#" target="_blank" rel="noopener" style="display:none;">진짜 역사 보기 →</a>
@@ -448,21 +468,37 @@ function renderChoices(l){
   }
 }
 
+// orpheaarchive.com/archive/salem-witch-trials-1692/의 팩트 요약 — 게임 오버 화면에 카드로 바로 보여주기 위한 사본.
+// 원본(전체 아티클+출처)은 웹사이트에만 있음. 여기 텍스트가 바뀌면 tools/ep01-facts.json도 맞춰 갱신할 것.
+const FACTS = {
+  'confess-to-survive': { no: 'Record 03', title: 'Confessing was the only thing that saved you', hook: 'Nineteen people told the truth. All nineteen hanged.', orphea: "Every survivor in this file lied under oath. Make of that what you will." },
+  'peine-forte-et-dure': { no: 'Record 09', title: 'Refuse to plead, and they add weight. Literally.', hook: 'Giles Corey’s last words were an instruction to his executioners: “More weight.”', orphea: "He died to keep a farm out of my ledger. It worked." },
+  'accusing-the-accusers': { no: 'Record 04', title: 'Calling out the liars got you hanged faster', hook: '“She’s obviously faking it” was the last logical thing some people ever said.', orphea: "Correct, and dead. An underrated combination." },
+  'ergot-poisoning': { no: 'Record 07', title: 'Maybe it wasn’t witchcraft. Maybe it was breakfast.', hook: 'One scientist’s theory: the accused and their accusers may have shared a fungus.', orphea: "A tidy explanation. History rarely offers those. File it as a theory, not a verdict." },
+  'property-motive': { no: 'Record 08', title: 'The more land you owned, the more likely you were a witch', hook: 'A guilty verdict could turn your farm into the county’s farm.', orphea: "Notice how rarely the poor were worth accusing." }
+};
+const FACT_BASE_URL = 'https://orpheaarchive.com/archive/salem-witch-trials-1692/';
+
 function showEnd(title, desc, factSlug){
   state.ended = true;
   $('#endTitle').textContent = title; $('#endDesc').textContent = desc;
   const link = $('#factLink');
-  if (factSlug){
-    link.href = FACT_BASE_URL + factSlug;
+  const card = $('#factCard');
+  const f = factSlug && FACTS[factSlug];
+  if (f){
+    $('#fcNo').textContent = f.no;
+    $('#fcTitle').textContent = f.title;
+    $('#fcHook').textContent = f.hook;
+    $('#fcNote').textContent = f.orphea;
+    card.classList.add('show');
+    link.href = FACT_BASE_URL + factSlug + '/';
     link.style.display = 'inline-block';
   } else {
+    card.classList.remove('show');
     link.style.display = 'none';
   }
   $('#endScreen').classList.add('show');
 }
-
-// 사망/엔딩 → orpheaarchive.com 팩트 아카이브 앵커. 에피소드 완성 후 실제 URL 확인할 것.
-const FACT_BASE_URL = 'https://orpheaarchive.com/archive/salem-witch-trials-1692/#';
 
 // game_over/epilogue 씬 도달 시 엔딩 화면으로 전환
 // scenario.json endings는 result_endpoint 기반이라 엔진에서는 간단히 game_over 진입 시점의 최근 서사로 타이틀 추정
