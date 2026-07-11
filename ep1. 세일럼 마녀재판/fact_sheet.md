@@ -136,8 +136,8 @@
 | 총독 부인 Lady Phips 고발 | Northeastern University | https://news.northeastern.edu/2023/10/18/salem-witch-trials-history-truth | ✅ 높음 |
 | JSTOR 학술 자료 | JSTOR | https://daily.jstor.org/caused-salem-witch-trials/ | ✅ 높음 |
 | 재판 거부 시 프레싱 전략 (재산 보호 목적) | blogs.loc.gov | https://blogs.loc.gov/law/2020/10/the-crushing-death-of-giles-corey-of-salem-1692/ | ✅ 높음 |
-| 1697년 재판관 새뮤얼 시월(Samuel Sewall) 공개 사과 — 보스턴 올드사우스 교회 참회문 | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 미검증 (에필로그 사용) |
-| 1706년 고발자 앤 퍼트넘 Jr. 공개 사과 — 고발 소녀 중 유일 | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 미검증 (에필로그 사용) |
-| 아비게일 윌리엄스 — 재판 이후 행적 기록 없음 | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 미검증 (에필로그 사용) |
+| 1697년 재판관 새뮤얼 시월(Samuel Sewall) 공개 사과 — 1697.1.14 보스턴 올드사우스 교회에서 참회문 낭독, 재판관 중 유일하게 잘못 인정 | Famous Trials + New England Historical Society | https://famous-trials.com/salem/2033-sal-bsew / https://newenglandhistoricalsociety.com/samuel-sewall-takes-blame-shame-salem-witchcraft-trial/ | ✅ 확인됨 (2026-07-10, 원문 참회문 확인) |
+| 1706년 고발자 앤 퍼트넘 Jr. 공개 사과 — 1706.8.25 세일럼 교회, 고발 소녀 중 유일 | Famous Trials + Univ. of Oregon(원문) | https://famous-trials.com/salem/2046-asa-put / https://pages.uoregon.edu/mjdennis/courses/wk3_putnam.htm | ✅ 확인됨 (2026-07-10, 원문 사과문 확인) |
+| 아비게일 윌리엄스 — 1692년 6월 이후 모든 기록(교회·법정·서신)에서 완전히 사라짐. 행적 불명 — 사망설/추방설 등은 추측일 뿐 확정 근거 없음 | Wikipedia + historyofmassachusetts.org | https://en.wikipedia.org/wiki/Abigail_Williams / https://historyofmassachusetts.org/abigail-williams-salem/ | ✅ 확인됨 (2026-07-10, "기록 없음" 자체가 확인된 사실) |
 | 맥각(ergot) 가설 — 호밀 곰팡이 중독(경련·환각·괴저)이 발작의 원인이라는 설. 린다 카포라엘(1976, Science) 제기. **반론 존재 — 확정 아님** | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 가설 (게임 내 사용 규칙: 플레이어 본인의 중독 사망은 게임 픽션으로 확정 서술 가능, 소녀들 발작 원인으로는 반드시 '어쩌면' 헤징 — stage2_overeat 오르페아 대사 준수) |
-| 터치 테스트 — 접촉 시 발작이 멎으면 유죄 증거로 채택된 검사법 | 클로드 지식 기반 | (URL 미검증 — 배포 전 확인) | ⚠️ 미검증 (final entry_event 사용) |
+| 터치 테스트 — 접촉 시 발작이 멎으면 유죄 증거로 채택된 검사법. 앤도버에서 한 오후에 약 12명이 눈가리개 후 검사받음(당시 진술문 원문 있음) | Famous Trials(Univ. of Missouri-KC Law) + The Monastery | https://law2.umkc.edu/faculty/projects/ftrials/salem/sal_acct.htm / https://www.themonastery.org/blog/seven-strange-and-barbaric-witch-tests-used-in-the-salem-witch-trials | ✅ 확인됨 (2026-07-10, Orphea Archive 웹 검증 시 같이 확인 — sourceTag "verified") |

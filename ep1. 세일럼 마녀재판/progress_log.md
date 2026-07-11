@@ -106,8 +106,9 @@
 1. **vn_script.md 페이싱 재작업 (사용자 진행 예정)**: 긴 NARR 줄 직접 재분할 + TIMESKIP 태그
    배치("그로부터 2주가 지났다" → stage1_entry_01 진입부 등 후보)
 2. game.html 실제 브라우저에서 수동 클릭 테스트 (자동화 도구 한계로 최종 확인 필요)
-3. 미검증 fact_sheet 항목 3건 웹서치 확인 (시월 사과·앤 퍼트넘 사과·아비게일 행적) —
-   Orphea Archive 팩트 페이지의 "verifying" 태그 항목(touch-test)도 같이 검증하면 좋음
+3. ~~미검증 fact_sheet 항목 3건 웹서치 확인~~ **2026-07-10 완료**: 시월 사과(1697.1.14 확인)·
+   앤 퍼트넘 사과(1706.8.25 확인)·아비게일 행적(기록 없음이 사실로 확인) 전부 실제 출처로 검증,
+   fact_sheet.md 갱신함. touch-test도 같이 확인됨(Orphea Archive 웹 검증 때 이미 처리된 걸 fact_sheet에 반영).
 4. **레오나르도 에셋 제작 (사용자 진행 예정)**: `assets/README.md` + `assets/asset_shotlist_ko.md`(BG·초상화)
    + `assets/audio_shotlist_ko.md`(BGM·SFX) 참고해서 `assets/bg|bgm|sfx|portraits|ui/`에
    `asset_manifest.md` 파일명 그대로 드롭인 → `node build/generate_game.js` 재실행하면 자동 반영.
