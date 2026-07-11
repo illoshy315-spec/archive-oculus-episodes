@@ -108,9 +108,16 @@
 2. game.html 실제 브라우저에서 수동 클릭 테스트 (자동화 도구 한계로 최종 확인 필요)
 3. 미검증 fact_sheet 항목 3건 웹서치 확인 (시월 사과·앤 퍼트넘 사과·아비게일 행적) —
    Orphea Archive 팩트 페이지의 "verifying" 태그 항목(touch-test)도 같이 검증하면 좋음
-4. **레오나르도 에셋 제작 (사용자 진행 예정)**: `assets/README.md` 참고해서 `assets/bg|bgm|sfx|portraits/`에
+4. **레오나르도 에셋 제작 (사용자 진행 예정)**: `assets/README.md` + `assets/asset_shotlist_ko.md`(BG·초상화)
+   + `assets/audio_shotlist_ko.md`(BGM·SFX) 참고해서 `assets/bg|bgm|sfx|portraits|ui/`에
    `asset_manifest.md` 파일명 그대로 드롭인 → `node build/generate_game.js` 재실행하면 자동 반영.
    **2026-07-10 완료**: `generate_game.js`가 빌드 시점에 파일 존재 여부를 스캔해서 있는 것만 실제 로드(BG는
-   이미지+그라데이션 레이어링, 캐릭터는 `<img>`, BGM/SFX는 `<audio>` 재생)하고 없는 건 기존 플레이스홀더로
-   자동 폴백하도록 구현·테스트 완료 (더미 이미지로 BG/초상화 로드 검증함). 부분적으로만 채워도 안전.
-5. Step 6 (OSMU 추출 — 유튜브 대본/숏폼/웹아티클) — web_article.md는 이제 orpheaarchive.com/archive 실사이트로 대체/확장된 상태
+   이미지+그라데이션 레이어링, 캐릭터는 `<img>`, BGM/SFX는 `<audio>` 재생, 스탯 아이콘 4개+공용 프레임 1개는
+   `assets/ui/`)하고 없는 건 기존 플레이스홀더로 자동 폴백하도록 구현·테스트 완료 (더미 이미지로 검증함).
+   부분적으로만 채워도 안전. 아직 실제 에셋은 하나도 안 채워진 상태(전부 플레이스홀더).
+5. **Step 6 (OSMU 추출) — 2026-07-10 페르소나·라우팅 정리 완료, 실제 산출물 생성은 미착수**:
+   `archive-oculus-skills` 레포에 게임(4-A)/유튜브(4-B) 페르소나 분리, 채널별(웹·카드뉴스·숏폼·쓰레드)
+   페르소나 확정, 유튜브 롱폼 루트 선정 원칙(퍼펙트 엔딩 회피 + 핵심 지뢰/도덕적 타협 엔딩 우선) 반영함.
+   이 에피소드용 `youtube_script_brief.md` 작성 완료(루트: stage1_B→stage3_A→final_B 정신력>50, 리텐션 팁
+   포함) — **다음 세션에서 이 브리핑 기준으로 실제 youtube_script.md 집필(페이블 담당) 진행하면 됨.**
+   web_article.md는 이제 orpheaarchive.com/archive 실사이트로 대체/확장된 상태.
