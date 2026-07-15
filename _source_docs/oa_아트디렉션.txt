@@ -1,0 +1,428 @@
+좋아.
+나도 조금 긴장된다. 😄
+
+왜냐하면 이 문서는 단순히 이번 EP1을 위한 게 아니라, **Orphea Archive라는 IP의 헌법**이 될 문서니까.
+
+그리고 하나 약속할게.
+
+> **앞으로 내가 쓰는 내용은 "있으면 좋겠다" 수준이 아니라, 이유가 있는 규칙만 넣겠다.**
+
+불필요한 설정은 안 만든다.
+모든 규칙은 **브랜딩, 제작 효율, 세계관** 셋 중 하나를 위한 것이어야 한다.
+
+---
+
+# ORPHEA ARCHIVE Production Bible
+
+## Part I — Brand Identity & Art Direction
+
+**Version 1.0 Draft**
+
+---
+
+# 1. Brand Philosophy
+
+## Vision
+
+**Orphea Archive** is not a historical encyclopedia.
+
+It is an interactive archive that asks the player to survive history rather than simply observe it.
+
+History is experienced through ordinary people, not heroes.
+
+The player is never asked:
+
+> *"Do you know history?"*
+
+Instead, the Archive asks:
+
+> *"Would you survive it?"*
+
+---
+
+## Mission
+
+Transform historical events into emotional simulations.
+
+Players should leave each episode understanding not only **what happened**, but **why ordinary people made impossible choices.**
+
+---
+
+## Core Experience
+
+The player enters history as someone with almost no power.
+
+Victory is never guaranteed.
+
+Correct choices may still lead to tragedy.
+
+History is not fair.
+
+---
+
+# 2. Core Keywords
+
+Every visual and narrative decision must reinforce these ideas.
+
+| Keyword     | Meaning                                            |
+| ----------- | -------------------------------------------------- |
+| Memory      | History is preserved memory.                       |
+| Choice      | Every episode revolves around difficult decisions. |
+| Observation | The Archive observes rather than judges.           |
+| Consequence | Every action has historical weight.                |
+| Humanity    | Ordinary people are the protagonists.              |
+| Truth       | Historical truth is often uncomfortable.           |
+
+---
+
+# 3. Creative Pillars
+
+Every new episode should satisfy all five pillars.
+
+---
+
+## Pillar 1
+
+History before Fantasy.
+
+Fantasy exists only inside the Archive.
+
+Historical locations remain historically believable.
+
+---
+
+## Pillar 2
+
+The Archive never changes.
+
+Historical eras constantly change.
+
+The Archive remains visually consistent.
+
+---
+
+## Pillar 3
+
+Characters are symbolic.
+
+Every recurring character represents an idea.
+
+Orphea
+
+→ Guidance
+
+Nephia
+
+→ Compassion
+
+Plague Doctor
+
+→ Creation and Sacrifice
+
+---
+
+## Pillar 4
+
+Beauty exists inside decay.
+
+Nothing should feel clean.
+
+Nothing should feel futuristic.
+
+Everything carries age.
+
+---
+
+## Pillar 5
+
+Silence is stronger than spectacle.
+
+Large explosions.
+
+Huge magical effects.
+
+Overly dramatic action.
+
+These are avoided whenever possible.
+
+Tension should come from atmosphere.
+
+---
+
+# 4. Art Direction
+
+## Official Style
+
+**Cinematic Stylized Realism**
+
+The project aims for believable realism enhanced by painterly composition and controlled stylization.
+
+Characters should resemble real people while preserving iconic silhouettes.
+
+---
+
+## Secondary Influences
+
+Dark Academia
+
+Techno Gothic
+
+Gaslamp Fantasy
+
+Victorian Illustration
+
+Historical Oil Painting
+
+Gothic Architecture
+
+Mechanical Astronomy
+
+Museum Illustration
+
+---
+
+# 5. Visual Language
+
+Every recurring object has narrative meaning.
+
+| Object        | Meaning             |
+| ------------- | ------------------- |
+| Lantern       | Guidance            |
+| Brass         | Preserved Knowledge |
+| Silver        | Memory              |
+| Bronze        | Ancient Creation    |
+| Balance Scale | Judgment            |
+| Pocket Watch  | Time                |
+| Candle        | Human Life          |
+| Keys          | Access to History   |
+| Parchment     | Recorded Truth      |
+| Astrolabe     | Observation of Time |
+
+No object exists purely for decoration.
+
+---
+
+# 6. Color Doctrine
+
+Every image should primarily use restrained colors.
+
+## Primary Palette
+
+Obsidian Black
+
+Aged Brass
+
+Ivory
+
+Silver White
+
+Warm Amber
+
+Dark Walnut
+
+---
+
+## Accent Colors
+
+Oxidized Bronze
+
+Deep Burgundy
+
+Ash Gray
+
+Forest Moss
+
+These should appear sparingly.
+
+---
+
+## Forbidden Palette
+
+Neon Blue
+
+Neon Green
+
+Bright Purple
+
+Pure Cyan
+
+Plastic White
+
+RGB Lighting
+
+Saturated Modern Colors
+
+---
+
+# 7. Material Library
+
+Preferred Materials
+
+Brass
+
+Bronze
+
+Verdigris Bronze
+
+Iron
+
+Old Steel
+
+Leather
+
+Linen
+
+Wool
+
+Oak
+
+Walnut
+
+Stone
+
+Marble
+
+Glass
+
+Wax
+
+Paper
+
+Parchment
+
+---
+
+Forbidden Materials
+
+Plastic
+
+Carbon Fiber
+
+Chrome
+
+Synthetic Rubber
+
+LED Displays
+
+Transparent Acrylic
+
+Modern Concrete
+
+---
+
+# 8. Lighting Doctrine
+
+Lighting tells emotional truth.
+
+Preferred Sources
+
+Lantern
+
+Candle
+
+Sunlight through windows
+
+Moonlight
+
+Fireplace
+
+Volumetric fog
+
+Dust
+
+Soft shadows
+
+---
+
+Forbidden Sources
+
+Neon
+
+Laser
+
+RGB
+
+LED Strip
+
+Sci-Fi Glow
+
+Lens Flare Abuse
+
+---
+
+# 9. The Archive Principle
+
+The Archive is outside history.
+
+It is never affected by historical events.
+
+Wars end.
+
+Kingdoms fall.
+
+Empires disappear.
+
+The Archive remains unchanged.
+
+---
+
+# 10. Historical Principle
+
+Every historical episode follows one rule.
+
+> **History changes.**
+>
+> **The Archive interprets.**
+>
+> **It never rewrites.**
+
+Historical authenticity is respected whenever possible.
+
+Creative interpretation is allowed only to increase emotional understanding—not to distort documented history.
+
+---
+
+# 11. Production Rules
+
+Before any image is approved, ask:
+
+* Does this still feel like **Orphea Archive**?
+* Does this respect the historical setting?
+* Does every major visual element have narrative purpose?
+* Could this image belong to another fantasy project? If yes, redesign it.
+* Is the atmosphere restrained rather than exaggerated?
+* Would this still be recognizable without dialogue?
+
+If any answer is "No," revise the design before approval.
+
+---
+
+# 12. Studio Motto
+
+> **Every era changes.**
+>
+> **The Archive never does.**
+
+---
+
+## 📌 내가 일부러 비워둔 것
+
+여기서부터가 중요한데, **일부러 아직 안 넣은 항목**이 있어.
+
+* 색상 HEX 코드 (최종 팔레트 확정 후)
+* 카메라 렌즈 규칙
+* UI 규칙
+* 로고 규칙
+* 썸네일 규칙
+* 프롬프트 규칙
+* QC 체크리스트
+
+이건 뒤 파트들과 연결되기 때문에 나중에 넣는 편이 더 일관성이 좋아.
+
+---
+
+### 내 자체 평가
+
+이 Part 1은 **세계관 설정집**이 아니라 **아트 디렉션 헌장**이야. 앞으로 새로운 시대(로마, 조선, 타이타닉, 체르노빌 등)를 추가할 때도 이 문서만 보면 "이게 Orphea Archive다운가?"를 판단할 수 있는 기준이 되도록 구성했어.
+
+그리고 다음에 만들 **Part II(오르페아 Production Model Sheet)**는 분위기가 완전히 달라질 거야. 설정 설명이 아니라, 실제로 이미지를 생성하고 검수하는 데 쓰는 **캐릭터 제작 매뉴얼** 수준으로 들어갈 생각이야.
