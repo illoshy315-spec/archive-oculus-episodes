@@ -181,6 +181,6 @@
   },
 
   "design_doc": "stage_design_EP02.md (분기트리·인과 1-A/1-B·경제표·도달성 시뮬레이션·아이템 명세·서사 개요)",
-  "locked": false,
-  "lock_note": "Step 3.5 산출물 완성 — 사용자 승인 시 locked: true로 전환"
+  "locked": true,
+  "lock_note": "🔒 2026-07-15 사용자 승인으로 잠금. Step 4 집필 중 변경 불가 — 변경 필요 시 사용자 재승인 (step3_5.md 잠금 규칙)"
 }
