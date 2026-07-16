@@ -36,6 +36,7 @@
     {"id": "boat_rescue",     "name": "해변 구조 대기",               "content": "헤르쿨라네움 선착장 300구. 함대는 진짜였고 접안은 불가능했다", "role": "trap", "stage": [4]},
     {"id": "wrong_direction", "name": "남쪽 = 낙진의 길",             "content": "바람이 경석을 남동쪽에 퍼부음. 생존자는 북쪽으로", "role": "trap",   "stage": [4]},
     {"id": "no_word_volcano", "name": "화산이라는 개념의 부재",        "content": "베수비오가 화산인 줄 아무도 몰랐다", "role": "background", "stage": [0, 1]},
+    {"id": "peculium_system", "name": "페쿨리움과 신분제 (Record 11)", "content": "노예의 저축 = 법적으로 주인 소유. 자유의 값은 주인이 정함. 오프닝 자산 공개 + S3-B 미련의 제도적 근거", "role": "background", "stage": [0, 3]},
     {"id": "giants_omen",     "name": "거인 목격담 (카시우스 디오)",   "content": "연기 속 거인 형상 — 당시의 합리적 해석. 웃긴 선택지(타입 B)", "role": "background", "stage": [1]},
     {"id": "dna_casts",       "name": "캐스트의 진실 (2024 DNA)",     "content": "사망 연출 — 게임오버 시 캐스트로 굳고 웹 레코드 카드 노출", "role": "background", "stage": [5]},
     {"id": "survivor_records","name": "생존자 재정착 기록 (Tuck)",     "content": "누케리아 비문에 남은 이름들 — 히든 엔딩 소재", "role": "background", "stage": [5]}
