@@ -21,7 +21,12 @@
     {"stat": "calm",   "condition": "== 0",  "effect": "공황 — 선택지 강제 축소 (오판 루트)", "location": "any"},
     {"stat": "bond",   "condition": ">= 50", "effect": "S3-C 활성 + 니게르 등불 이벤트 (어둠 판정 자동 성공)", "location": "s3, final_north"},
     {"stat": "wealth", "condition": ">= 40", "effect": "생존 엔딩 분기: 재정착(퍼펙트 계열) vs 난민(일반)", "location": "ending_calc"},
-    {"stat": "info",   "condition": ">= 50", "effect": "최종관문 남길 선택지에 경고 연출(바람 묘사) 추가 + 카스토르 재등장 대사 확장", "location": "final"}
+    {"stat": "info",   "condition": ">= 30", "effect": "최종관문 남길 선택지에 경고 연출(바람 묘사) 추가 + 카스토르 재등장 대사 확장 ※원안 50은 도달 불가(max 30)라 하향 — 도달성 시뮬레이션", "location": "final"},
+    {"stat": "hp",     "condition": ">= 15", "effect": "북길 게이트 완화 임계값 — bedding 또는 카스토르 노새 보유 시 30 대신 적용", "location": "final_north"}
+  ],
+  "auto_events": [
+    {"id": "long_night", "trigger": "S2 종료 시 전 경로 자동", "effect": {"calm": -15},
+     "note": "'긴 밤' — 지붕 무너지는 소리, 어둠. 도달성 시뮬레이션이 요구한 튜닝: 이것 없으면 S3-A 침착 게이트(>=50)가 맨정신 플레이어에게 절대 실패 불가능한 죽은 게이트 (최저 경로 55)"}
   ],
 
   "facts": [
@@ -85,14 +90,16 @@
      "entry_event": null,
      "comic_choice": {"position": "진입부 광장 군중 씬 단발", "fact": "giants_omen",
        "text": "\"저건… 거인들이다! 거인들이 산을 걷고 있어!\" 하고 외친다",
-       "outcome": {"bond": 5, "info": -10}, "orphea": "거인. 기록해두죠. 당시 지식으로는 나무랄 데 없는 가설입니다. 대응책이 '기도'라는 게 문제일 뿐."},
+       "outcome": {"bond": 5, "info": -10, "flag": "giants_rumor"},
+       "downstream": "S2에서 밖에서 군중의 기도 소리 연출 (event_trigger — 틀린 모델이 사회적으로 강화됨)",
+       "orphea": "거인. 기록해두죠. 당시 지식으로는 나무랄 데 없는 가설입니다. 대응책이 '기도'라는 게 문제일 뿐."},
      "choices": [
        {"id": "A", "text": "지금 맨몸으로 성문을 향한다", "type": "risky",
         "outcome": "stage2_street", "downstream": {"flag": "early_leaver", "wealth": -15, "note": "페쿨리움 포기 — 난민 루트 각인. 단 S2를 거리 버전으로 진행 (조기 출발 보상: 시간 여유)"}},
        {"id": "B", "text": "늙은 노새꾼의 짐수레 세우는 걸 돕는다", "type": "npc_relation",
-        "outcome": "stage2_house", "downstream": {"flag": "castor_debt", "info": 30, "note": "바람 정보 + 관문 노새 자리. 페쿨리움 챙길 짬 있음 (wealth +25)"}},
+        "outcome": "stage2_house", "downstream": {"flag": "castor_debt, has_peculium", "info": 30, "wealth": 25, "note": "바람 정보 + 관문 노새 자리. 페쿨리움 챙길 짬 있음"}},
        {"id": "C", "text": "주인의 명령대로 금고와 문서함을 꾸린다 — \"해변에서 합류하라\"", "type": "historical_trap",
-        "outcome": "stage2_house", "downstream": {"flag": "beach_promise", "wealth": 25, "hp": -15, "note": "packing_delay + 해변 각인. 몸값 장부가 문서함에 (미련 장치)"}}
+        "outcome": "stage2_house", "downstream": {"flag": "beach_promise, has_peculium", "wealth": 25, "hp": -15, "note": "packing_delay + 해변 각인. 몸값 장부가 문서함에 (미련 장치)"}}
      ]},
 
     {"id": 2, "title": "경석의 밤", "trap_fact": "shelter_trap",
@@ -113,9 +120,11 @@
      "entry_event": "thirst",
      "choices": [
        {"id": "A", "text": "지금 즉시, 어둠 속으로 걷는다", "type": "stat_emergency",
-        "outcome": "final_gate", "gate": {"stat": "calm", "threshold": 50, "fail": "방향 상실 이벤트 (drunk 플래그 시 자동 실패 → 산 쪽으로 걷는 사망 분기)"}},
-       {"id": "B", "text": "끝났다. 주인집에 돌아가 내 몫(페쿨리움)을 회수한다", "type": "historical_trap",
-        "outcome": "death_lull", "death": true, "note": "치명② 소강기 회귀 — 경석층 위의 시신. lull-return 레코드 카드"},
+        "outcome": "final_gate", "gate": {"stat": "calm", "threshold": 50,
+        "fail_drunk": "자동 실패 → 산 쪽으로 걷는 사망 분기 (게임오버 카드 = R12)",
+        "fail_sober": "방향 상실 — hp -20 + 금팔찌 진입 이벤트 스킵(시간 소모). 사망 아님"}},
+       {"id": "B", "text": "[변형: early_leaver] 끝났다. 주인집에 돌아가 내 몫(페쿨리움)을 회수한다 / [변형: has_peculium] 문서함의 몸값 장부 — 내 지불 기록을 찾으러 돌아간다", "type": "historical_trap",
+        "outcome": "death_lull", "death": true, "note": "치명② 소강기 회귀 — 경석층 위의 시신. lull-return 레코드 카드. 몸값 장부는 개연성 창작 (stage_design §6 — 역사 단언 금지)"},
        {"id": "C", "text": "리비아를 부축해 함께 걷는다", "type": "item_use", "required_flag": "livia_saved",
         "outcome": "final_gate", "downstream": {"bond": 20, "hp": -10, "note": "니게르 등불 합류 — 어둠 판정 자동 성공 (voices_in_dark)"}}
      ]},
@@ -138,16 +147,38 @@
   ],
 
   "endings": {
-    "perfect": {"condition": "북길 생존 + wealth >= 40 + bond >= 50 + !looted_gold",
-      "scene": "ending_resettle", "note": "누케리아 재정착 — 티투스 위원회 등록, 페쿨리움으로 자유를 산다. '노예로 도망쳐 자유민으로 도착했다'"},
-    "normal": {"condition": "북길 생존 + (wealth < 40 or looted_gold 의심 이벤트)",
-      "scene": "ending_refugee", "note": "난민 — 살았으나 이름도 재산도 증명 못 함. looted_gold면 약탈 심문 이벤트 경유"},
-    "death": {"condition": "치명 루트 4종 + 잠복(merum) + 게이트 실패",
-      "scene": "ending_cast", "note": "공통 연출: 화면이 재로 덮이며 캐스트로 굳음 → 해당 웹 레코드 카드 인라인 노출 (EP1 게임오버-카드 연동 승계)"},
-    "hidden": {"condition": "후보(Step 3.5에서 확정): 북길 + livia_saved + castor_debt + 새벽 전 도착",
-      "scene": "ending_inscription", "note": "후보 — '비문에 남는 이름': 훗날 누케리아의 재정착 비문에 플레이어와 리비아 가족의 이름이 나란히 (Tuck 연구의 실제 비문 추적 방식 오마주)"}
+    "_판정순서": "hidden → perfect → normal (사망은 경로 즉시)",
+    "hidden": {
+      "condition": "북길 생존 && livia_saved && castor_debt && !looted_gold && thirst != merum",
+      "scene": "ending_inscription", "name": "비문에 남는 이름",
+      "trigger_condition": "지체 없이(메룸 X), 손을 더럽히지 않고(금팔찌 X), 은혜를 심고(노새꾼) 지키며(리비아) 북길 완주",
+      "scene_beat": "수십 년 뒤 누케리아, 석공이 비문을 새긴다 — 플레이어와 리비아 가족의 이름이 나란히. 끌자국 클로즈업으로 끝 (Tuck 비문 추적 연구 오마주)",
+      "npc_resolution": "니게르 가족과 의형제, 카스토르는 노새와 함께 장수",
+      "orphea_tone": "냉소 최소치 — '돌에 이름이 남는 확률까지 계산하진 않았습니다. 기록 담당자로서, 이건 보관하겠습니다.'"},
+    "perfect": {
+      "condition": "북길 생존 && wealth >= 40 && bond >= 50 && !looted_gold",
+      "scene": "ending_burned_ledger", "name": "불탄 장부",
+      "trigger_condition": "일찍+가볍게, 그러나 페쿨리움과 동행을 지키고 북길 완주",
+      "scene_beat": "누케리아 등록소. 서기: '신분은?' 침묵 한 박자 — '자유민.' 반박할 서류가 없다. 당신을 노예로 만들던 것은 장부였고, 장부는 재 밑에 있다. ※개연성 창작 — 역사 단언 금지, 에필로그 팩트는 티투스 위원·재정착(검증됨)만",
+      "npc_resolution": "루키우스 일가 해변에서 전멸(오프스크린·담담히), 카르푸스는 금고와 함께",
+      "orphea_tone": "의미심장한 축하 — '기록이 없다는 건, 때로 최고의 기록입니다.'"},
+    "normal": {
+      "condition": "북길 생존 (hidden·perfect 미달 or looted_gold)",
+      "scene": "ending_refugee", "name": "난민",
+      "trigger_condition": "생존했으나 증명할 것이 없음",
+      "scene_beat": "누케리아 배급 줄. looted_gold 분기: 목격자 NPC와 눈이 마주치고 — 그가 시선을 돌린다. 고발도 용서도 아닌 침묵",
+      "npc_resolution": "목격자와 관계 파탄 (대사 없음 — 침묵 처리, production_spec 4.7)",
+      "orphea_tone": "독설 거둔 건조한 1줄 — '살았습니다. 오늘은 그걸로 충분하다고 해두죠.'"},
+    "death": {
+      "condition": "S2-A 매몰 / S3-B 회귀 / S3-A drunk / 관문-A 해변 / 관문-C 남길 / 관문-B hp 낙오 / calm 0 공황",
+      "scene": "ending_cast", "name": "캐스트",
+      "trigger_condition": "경로별 7종 — stage_design §0 표 참조",
+      "scene_beat": "공통: 화면이 재로 덮이며 캐스트로 굳음 → 경로별 웹 레코드 카드 인라인 (매몰=R01/소강·공황=R05/해변=R02/남길=R07/메룸=R12/낙오=R03). 경로별 비트는 vn_script에서 분리 집필",
+      "npc_resolution": "경로별 — 해변은 루키우스와 나란히 굳음",
+      "orphea_tone": "표준 사망 코멘트 + 해당 레코드 훅 인용"}
   },
 
+  "design_doc": "stage_design_EP02.md (분기트리·인과 1-A/1-B·경제표·도달성 시뮬레이션·아이템 명세·서사 개요)",
   "locked": false,
-  "lock_note": "Step 3.5 (복선·인과 연결 + 스탯 도달성 시뮬레이션) 후 사용자 승인으로 잠금"
+  "lock_note": "Step 3.5 산출물 완성 — 사용자 승인 시 locked: true로 전환"
 }
