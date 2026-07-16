@@ -17,9 +17,8 @@
 
   "stat_gates": [
     {"stat": "hp",     "condition": ">= 30", "effect": "최종관문 북길 완주 가능 (미달 시 낙오 이벤트, 베개/이불 아이템으로 완화)", "location": "final_north"},
-    {"stat": "calm",   "condition": ">= 50", "effect": "S3 어둠 길찾기 판정 성공 + 카르푸스 계단 대치 돌파 대사 해금", "location": "s3_move, s2_stairs"},
-    {"stat": "calm",   "condition": "== 0",  "effect": "공황 — 선택지 강제 축소 (오판 루트)", "location": "any"},
-    {"stat": "bond",   "condition": ">= 50", "effect": "S3-C 활성 + 니게르 등불 이벤트 (어둠 판정 자동 성공)", "location": "s3, final_north"},
+    {"stat": "calm",   "condition": ">= 50", "effect": "S3 어둠 길찾기 판정 성공. ※카르푸스 계단은 게이트 아님 — 보스 연출 씬 (검수: 시점 calm 65~70이라 게이트로는 실패 불가능한 죽은 설계였음). ※calm==0 공황 게이트 삭제 — min 40이라 도달 불가", "location": "s3_move"},
+    {"stat": "bond",   "condition": "정산", "effect": "관문 노새 자리 배분 씬 + 퍼펙트 조건(>=50). ※S3-C 활성의 canonical 조건은 livia_saved 플래그 단독 (bond 이중 조건 제거 — 검수 #8)", "location": "final_north, ending_calc"},
     {"stat": "wealth", "condition": ">= 40", "effect": "생존 엔딩 분기: 재정착(퍼펙트 계열) vs 난민(일반)", "location": "ending_calc"},
     {"stat": "info",   "condition": ">= 30", "effect": "최종관문 남길 선택지에 경고 연출(바람 묘사) 추가 + 카스토르 재등장 대사 확장 ※원안 50은 도달 불가(max 30)라 하향 — 도달성 시뮬레이션", "location": "final"},
     {"stat": "hp",     "condition": ">= 15", "effect": "북길 게이트 완화 임계값 — bedding 또는 카스토르 노새 보유 시 30 대신 적용", "location": "final_north"}
@@ -95,7 +94,7 @@
        "orphea": "거인. 기록해두죠. 당시 지식으로는 나무랄 데 없는 가설입니다. 대응책이 '기도'라는 게 문제일 뿐."},
      "choices": [
        {"id": "A", "text": "지금 맨몸으로 성문을 향한다", "type": "risky",
-        "outcome": "stage2_street", "downstream": {"flag": "early_leaver", "wealth": -15, "note": "페쿨리움 포기 — 난민 루트 각인. 단 S2를 거리 버전으로 진행 (조기 출발 보상: 시간 여유)"}},
+        "outcome": "stage2_street", "downstream": {"flag": "early_leaver", "wealth": -15, "info": 10, "note": "페쿨리움 포기 — 퍼펙트 불가 각인. 고유 보상: 피난 행렬 관찰 (info +10 — 북쪽으로 가는 사람들). S2는 거리 변형으로 진행"}},
        {"id": "B", "text": "늙은 노새꾼의 짐수레 세우는 걸 돕는다", "type": "npc_relation",
         "outcome": "stage2_house", "downstream": {"flag": "castor_debt, has_peculium", "info": 30, "wealth": 25, "note": "바람 정보 + 관문 노새 자리. 페쿨리움 챙길 짬 있음"}},
        {"id": "C", "text": "주인의 명령대로 금고와 문서함을 꾸린다 — \"해변에서 합류하라\"", "type": "historical_trap",
@@ -105,14 +104,16 @@
     {"id": 2, "title": "경석의 밤", "trap_fact": "shelter_trap",
      "trap_choice_id": "A", "escape_choice_ids": ["C"], "neutral_choice_ids": ["B"],
      "entry_event": null,
-     "midpoint_event": "카르푸스의 계단 대치 — 침착 >= 50 돌파 대사 or 무시하고 통과",
+     "midpoint_event": "카르푸스의 계단 대치 — 보스 연출 씬 (게이트 아님. calm 수치별 대사 차등은 집필 재량 — 검수 #2: 시점 calm이 항상 50 이상이라 게이트로는 죽은 설계)",
+     "street_variant": "S1-A 경로 전용: 동일 A/B/C 구조의 거리 버전 (무대: 성문 근처 버려진 여관. 진입 고정 hp -20 노숙 대기). A=여관 안쪽 방(동일 사망), B=거리에서 피난 중인 리비아 조우, C=여관 2층 침상(bedding). giants_rumor 회수는 거리 군중 기도로 성립. 카르푸스 미등장",
+     "planted_item": "bedding (C), livia_saved (B)", "foreshadow": "남쪽 하늘의 어둠 (C 조망 — 관문 남길 복선)",
      "choices": [
        {"id": "A", "text": "가장 안쪽, 돌천장 방으로 피한다 (카르푸스: \"주인님 명령이다\")", "type": "historical_trap",
         "outcome": "death_buried", "death": true, "note": "치명① 매몰 — 캐스트 연출 + shelter-trap 레코드 카드"},
        {"id": "B", "text": "문을 두드리는 임산부를 들인다", "type": "npc_relation",
         "outcome": "stage3", "downstream": {"flag": "livia_saved", "bond": 30, "hp": -10, "calm": -5}},
        {"id": "C", "text": "2층으로 올라가 지붕 창을 뜯는다", "type": "item_use",
-        "outcome": "stage3", "downstream": {"item": "bedding", "hp": -15, "note": "베개·이불 획득 (이동 체력 비용 감소). livia_saved 루트는 니게르가 이불 지참으로 동일 효과"}}
+        "outcome": "stage3", "downstream": {"item": "bedding", "hp": -15, "info": 15, "note": "베개·이불 획득 + 고유 페이오프: 지붕 위 조망 — 남쪽 하늘이 더 어둡다 (info +15, 관찰의 보상 — 검수 #15: S2-B 상위호환 문제 완화). livia_saved 루트는 니게르가 이불 지참으로 bedding 동일 효과"}}
      ]},
 
     {"id": 3, "title": "거짓 새벽 — 침묵의 삼십 분", "trap_fact": "lull_return",
@@ -142,14 +143,15 @@
         "note": "castor_debt 플래그 시 노새꾼 재등장 — '노새가 빈다. 한 자리.' (동행 있으면 누구를 태울지 선택 = 유대 정산)"},
        {"id": "C", "text": "남길로 — 산에서 가장 빨리 멀어지는 길", "type": "historical_trap",
         "outcome": "death_south", "death": true, "hook_tag": "cliffhanger",
-        "note": "치명④ — drunk 플래그 시 이 선택지 연출 강화('남길이 더 가까워 보인다'). info >= 50이면 경고 연출 추가. wrong-direction 레코드 카드"}
+        "note": "치명④ — drunk 플래그 시 이 선택지 연출 강화('남길이 더 가까워 보인다'). info >= 30이면 경고 연출 추가 (50은 도달 불가 — 검수 #3 스테일 수정). wrong-direction 레코드 카드"}
      ]}
   ],
 
   "endings": {
     "_판정순서": "hidden → perfect → normal (사망은 경로 즉시)",
     "hidden": {
-      "condition": "북길 생존 && livia_saved && castor_debt && !looted_gold && thirst != merum",
+      "condition": "북길 생존 && livia_saved && stage3_choice == 'C' && castor_debt && !looted_gold && thirst != merum",
+      "condition_note": "stage3_choice=='C' 필수 — 없으면 '리비아를 들이고 S3에서 버린' 플레이어가 리비아와 나란히 비문에 새겨지는 모순 (검수 #5)",
       "scene": "ending_inscription", "name": "비문에 남는 이름",
       "trigger_condition": "지체 없이(메룸 X), 손을 더럽히지 않고(금팔찌 X), 은혜를 심고(노새꾼) 지키며(리비아) 북길 완주",
       "scene_beat": "수십 년 뒤 누케리아, 석공이 비문을 새긴다 — 플레이어와 리비아 가족의 이름이 나란히. 끌자국 클로즈업으로 끝 (Tuck 비문 추적 연구 오마주)",
@@ -170,10 +172,10 @@
       "npc_resolution": "목격자와 관계 파탄 (대사 없음 — 침묵 처리, production_spec 4.7)",
       "orphea_tone": "독설 거둔 건조한 1줄 — '살았습니다. 오늘은 그걸로 충분하다고 해두죠.'"},
     "death": {
-      "condition": "S2-A 매몰 / S3-B 회귀 / S3-A drunk / 관문-A 해변 / 관문-C 남길 / 관문-B hp 낙오 / calm 0 공황",
+      "condition": "S2-A 매몰 / S3-B 회귀 / S3-A drunk / 관문-A 해변 / 관문-C 남길 / 관문-B hp 낙오",
       "scene": "ending_cast", "name": "캐스트",
-      "trigger_condition": "경로별 7종 — stage_design §0 표 참조",
-      "scene_beat": "공통: 화면이 재로 덮이며 캐스트로 굳음 → 경로별 웹 레코드 카드 인라인 (매몰=R01/소강·공황=R05/해변=R02/남길=R07/메룸=R12/낙오=R03). 경로별 비트는 vn_script에서 분리 집필",
+      "trigger_condition": "경로별 6종 — stage_design §0 표 참조. ※'침착 0 공황' 삭제 — calm min 40이라 도달 불가 (검수 #1)",
+      "scene_beat": "공통: 화면이 재로 덮이며 캐스트로 굳음 → 경로별 웹 레코드 카드 인라인 (매몰=R01/소강=R05/해변=R02/남길=R07/메룸=R12/낙오=R03). 경로별 비트는 vn_script에서 분리 집필",
       "npc_resolution": "경로별 — 해변은 루키우스와 나란히 굳음",
       "orphea_tone": "표준 사망 코멘트 + 해당 레코드 훅 인용"}
   },
