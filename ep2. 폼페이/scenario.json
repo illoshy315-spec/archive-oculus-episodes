@@ -67,7 +67,7 @@
      "choices": [
        {"id": "water", "text": "재 가라앉은 물을 마신다",        "downstream": {"hp": 5,  "calm": -10}},
        {"id": "merum", "text": "포도주를 원액으로 들이켠다",      "downstream": {"hp": 20, "calm": 15, "flag": "drunk"},
-        "note": "잠복 사망 — drunk 플래그: S3·관문 방향 판정 악화, 남길 매력도 연출 강화. 에필로그에서 메룸 문화 해설"},
+        "note": "잠복 사망 — drunk 플래그: S3·관문 방향 판정 악화, 남길 매력도 연출 강화. 사망 시 게임오버 카드 = 웹 Record 12 (unmixed-wine). 에필로그에서 메룸 문화 해설"},
        {"id": "skip",  "text": "참는다",                        "downstream": {"hp": -10}}
      ]},
     {"id": "gold_bracelet", "trigger": "최종관문 진입 직전 (성문으로 걷는 길)",

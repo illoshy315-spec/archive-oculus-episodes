@@ -32,7 +32,7 @@
 | shelter_trap (실내 매몰) | §4-1 | S2-A 치명① | |
 | pillow_armor (베개) | §4-8 | S2-C 아이템 + 니게르 이불 | |
 | lull_return (소강기) | §4-5 | S3-B 치명② | |
-| merum (원액 포도주) | 신규 (Step 3 추가 — 미시사: 로마 음주 문화) | 진입 이벤트 '갈증' → 잠복 사망 | |
+| merum (원액 포도주) | fact_sheet §8.1 + 웹 Record 12 (unmixed-wine) | 진입 이벤트 '갈증' → 잠복 사망 (게임오버 카드 = R12) | |
 | voices_in_dark (6.20 목소리) | §3 오감 | S3-C·니게르 등불 씬 | |
 | boat_rescue (해변 300구) | §4-2 | 관문-A 치명③ + 오르페아 악의 가이드 | |
 | wrong_direction (남길) | §4-7 | 관문-C 치명④ | |
