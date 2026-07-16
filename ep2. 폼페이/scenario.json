@@ -47,7 +47,7 @@
      "motivation": "표면: 관대한 가부장 / 실제: 플레이어 = 운반 수단이자 재산",
      "appears_in": [1, 4],
      "betrayal_trigger": {"type": "structural", "condition": "always", "result": "해변 재회 첫마디가 '짐은 어디 있느냐'"}},
-    {"id": "carpus",  "name": "카르푸스 (마름)",           "role": "boss",      "sacrifice_eligible": false,
+    {"id": "carpus",  "name": "카르푸스 (디스펜사토르 — 금고지기)", "role": "boss",      "sacrifice_eligible": false,
      "motivation": "표면: 주인의 명령 집행 / 실제: 체제 = 그의 존재 이유. 무너지는 밤에도 붙듦",
      "appears_in": [1, 2, 3],
      "glitch_candidate": true},
@@ -74,7 +74,7 @@
      "situation": "재 위에 뻗은 팔. 손목에서 굴러 나온 금팔찌가 발치에 멎는다",
      "choices": [
        {"id": "take", "text": "줍는다",   "downstream": {"wealth": 15, "bond": -10, "flag": "looted_gold"},
-        "note": "잠복 — 생존 엔딩 난민 심사에서 출처 불명 금 = 약탈자 의심 이벤트 (사후 약탈 단속 근거는 Step 3.5 검증 표기)"},
+        "note": "잠복 — 동행 NPC(니게르/카스토르) 있으면 목격됨 → 생존 엔딩에서 공동체 낙인·관계 파탄 연출. ※'약탈 단속 심문' 제도는 검증 실패로 폐기 (fact_sheet §8.5) — 제도가 아니라 사람이 기억한다"},
        {"id": "pass", "text": "지나친다", "downstream": {}}
      ]}
   ],
