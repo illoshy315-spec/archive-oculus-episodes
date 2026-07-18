@@ -522,10 +522,212 @@ STAT: 침착 -15
 GOTO: s3_thirst
 END_SCENE
 
-<!-- ===== 이하 S3부터 승인 후 계속 (아래는 임시 스텁) ===== -->
+<!-- ===== STAGE 3 — 거짓 새벽 (유머 예산 0) ===== -->
 
 SCENE: s3_thirst
-NARR: "[S3 스텁 — 거짓 새벽·갈증. 승인 후 집필]"
+BG: bg_dark_interior.jpg
+BGM: bgm_silence_low
+
+NARR: "소리가 멎었다."
+NARR: "당신은 눈을 뜬다. 열여덟 시간 만의 정적이다. 귀가 먹먹할 만큼 조용하다."
+IF: livia_saved
+NARR: "리비아도 깨어 있다. 어둠 속에서 그녀의 눈이 이쪽을 본다. 아무도 먼저 말하지 않는다."
+ENDIF
+THINK: "끝난 건가?"
+
+NARR: "일어서려는데 혀가 입천장에 붙어 떨어진다. 하루 종일 물 한 모금 마시지 않았다."
+NARR: "물독으로 간다. 수면에 재의 막이 떠 있다. 바닥엔 뿌연 침전물. 코를 대니 젖은 돌 냄새가 난다."
+NARR: "부엌 선반에 포도주 단지가 하나 남아 있다. 봉인 왁스에 주인집 인장이 찍혀 있다. 물은 타지 않은 원액이다."
+THINK: "물이냐, 포도주냐, 참느냐."
+SHOW: orphea default
+ORPHEA: "탈수 상태군요. 참고로 포도주는 물보다 열량이 높습니다. 통계적으로는요."
+HIDE: orphea
+
+CHOICE:
+  A: "재 가라앉은 물을 마신다" → s3_thirst_water
+  B: "포도주를 원액으로 들이켠다" → s3_thirst_merum
+  C: "참는다" → s3_thirst_skip
+
+END_SCENE
+
+SCENE: s3_thirst_water
+BG: bg_dark_interior.jpg
+
+NARR: "당신은 재의 막을 손으로 걷어내고 물을 뜬다. 미지근하고, 텁텁하다."
+NARR: "두 모금째에 혀 끝에서 모래가 씹힌다. 위가 뒤틀린다. 당신은 억지로 삼킨다."
+THINK: "물 맛이 왜 이래. ...마셨으니 됐어. 가자."
+STAT: 체력 +5
+STAT: 침착 -10
+GOTO: s3_choice
+END_SCENE
+
+SCENE: s3_thirst_merum
+BG: bg_dark_interior.jpg
+
+NARR: "당신은 왁스 봉인을 뜯고 단지를 기울인다. 원액이 목을 타고 내려간다."
+NARR: "따뜻하다. 손끝까지 따뜻해진다. 가슴에서 뭔가가 펴진다."
+THINK: "이거지. 살 것 같다. 몸에 힘이 도네."
+NARR: "떨리던 손이 멎는다. 어둠이 아까보다 덜 무섭다."
+STAT: 체력 +20
+STAT: 침착 +15
+FLAG_SET: drunk
+GOTO: s3_choice
+END_SCENE
+
+SCENE: s3_thirst_skip
+BG: bg_dark_interior.jpg
+
+NARR: "당신은 물독을 들여다보다가, 그냥 내려놓는다. 재가 가라앉은 물도, 주인의 포도주도 손대지 않는다."
+THINK: "성문 밖에만 나가면 물은 있다. 참자."
+NARR: "혀가 마른 채로 몸을 일으킨다. 다리가 무겁다."
+STAT: 체력 -10
+GOTO: s3_choice
+END_SCENE
+
+SCENE: s3_choice
+BG: bg_window_grey.jpg
+BGM: bgm_false_dawn
+
+NARR: "2층 창으로 바깥을 본다. 거리가 없어졌다. 회색 벌판이 지붕 높이 바로 아래까지 차올라 있다."
+NARR: "그 벌판 위로, 드문드문 사람들이 걷고 있다. 어디선가 목소리가 들린다."
+???: "끝났어! 나와! 지금 나와야 해!"
+???: "조용해졌잖아! 집에 가자!"
+IF: livia_saved
+SHOW: livia default
+NARR: "리비아가 몸을 일으키다가, 배를 감싸며 도로 주저앉는다."
+LIVIA: "저는... 저 때문에 늦으면 안 돼요. 먼저 가세요. 남편이, 남편이 올 거예요."
+HIDE: livia
+ENDIF
+THINK: "조용한 것과 끝난 것은... 같은 말인가?"
+THINK: "모르겠다. 하지만 지금 안 움직이면, 언제 움직여?"
+
+IF: early_leaver
+CHOICE:
+  A: "지금 즉시, 회색 벌판 위로 걷는다" → s3a_walk
+  B: "저택으로 돌아간다. 내 페쿨리움 — 팔 년을 두고 갈 수는 없다" → s3b_death
+ENDIF
+IF: NOT early_leaver
+CHOICE:
+  A: "지금 즉시, 회색 벌판 위로 걷는다" → s3a_walk
+  B: "소강을 틈타 금고방을 뒤진다. 내 몸값 장부 — 지불 기록이 없으면 자유도 없다" → s3b_death
+  C: "[리비아 동행] 리비아를 부축해 함께 걷는다" → s3c_niger
+ENDIF
+
+END_SCENE
+
+SCENE: s3b_death
+BG: bg_grey_street.jpg
+BGM: bgm_doom_low
+
+IF: early_leaver
+NARR: "돌아가는 길은 이상하게 수월하다. 아는 길이니까. 회색 벌판이 되었어도, 골목의 굽이는 그대로니까."
+NARR: "저택 골방. 마룻장. 흙 항아리. 사백육십 데나리우스가 그대로 있다. 당신은 항아리를 끌어안는다."
+THINK: "됐다. 이제 됐어. 이거면 —"
+ENDIF
+IF: NOT early_leaver
+NARR: "금고방은 어제 그대로다. 당신은 문서함을 열고, 밀랍판을 하나씩 램프에 비춰 본다."
+NARR: "곡물 장부. 선적 기록. 세금. ...그리고 당신의 이름. 사백육십이라는 숫자."
+THINK: "찾았다. 이거다. 이거면 어디 가서든 —"
+ENDIF
+NARR: "창이 밝아진다."
+NARR: "새벽이 아니다. 빛이 산 쪽에서 온다."
+NARR: "훗날 발굴자들은 경석층 위에서 이들을 찾아낸다 — 열여덟 시간의 돌비를 견디고, 잠잠해진 뒤에 움직인 사람들. 그들은 가장 단단한 바닥 위에서, 가장 마지막에 죽었다."
+SHOW: orphea default
+ORPHEA: "돌비는 견디는 것이었고, 침묵은 도망치라는 신호였습니다. 당신은 둘을 반대로 읽으셨군요."
+HIDE: orphea
+GOTO: ending_cast
+END_SCENE
+
+SCENE: s3a_walk
+BG: bg_grey_field.jpg
+BGM: bgm_false_dawn
+SFX: sfx_pumice_steps
+
+NARR: "창을 넘어 벌판에 내려선다. 발이 정강이까지 빠진다. 걷는다기보다, 헤엄에 가깝다."
+IF: bedding
+NARR: "몸에 두른 이불이 무릎과 팔꿈치를 지켜준다. 돌 위를 기어도 아프지 않다."
+ENDIF
+NARR: "어둠 속에서 방향은 소리뿐이다. 앞서간 사람들의 목소리가 띄엄띄엄 이어진다."
+IF: drunk
+THINK: "괜찮아. 몸도 따뜻하고, 다리에 힘도 있어. 나는 지금 잘 가고 있어."
+NARR: "저 앞이 밝다. 붉은 기운이 하늘에 번져 있다."
+THINK: "새벽이다. 해가 뜨는 쪽으로 가면 돼. 간단하잖아."
+NARR: "당신은 목소리들에게서 멀어진다. 발걸음에 확신이 붙는다. 붉은 빛이 점점 가까워진다."
+GOTO: s3a_drunk_death
+ENDIF
+IF: 침착 >= 50
+NARR: "당신은 걸음을 멈추고, 목소리를 센다. 셋. 넷. 전부 한 방향으로 흘러간다."
+THINK: "저쪽이다. 사람들이 가는 쪽. 성문."
+NARR: "당신은 목소리의 강을 따라 걷는다."
+GOTO: gate_bracelet
+ENDIF
+IF: 침착 < 50
+NARR: "목소리가 사방에서 들리는 것 같다. 당신은 한 골목을 돌고, 같은 골목을 또 돈다."
+NARR: "무너진 차양이 두 번째로 나타났을 때, 당신은 자신이 원을 그리며 걸었다는 걸 안다."
+THINK: "침착해. 침착해. ...어느 쪽이야."
+STAT: 체력 -20
+FLAG_SET: skip_bracelet
+NARR: "한참을 헤맨 끝에, 멀리서 겹쳐 들리는 목소리들을 붙잡는다. 시간을 많이 잃었다."
+GOTO: final_gate
+ENDIF
+END_SCENE
+
+SCENE: s3a_drunk_death
+BG: bg_red_glow.jpg
+BGM: bgm_doom_low
+
+NARR: "몸이 가볍다. 걸음이 빠르다. 붉은 빛이 이제 벌판 전체를 물들인다."
+THINK: "거의 다 왔어. 해만 뜨면, 길이 보이면 —"
+NARR: "바람이 분다. 뜨거운 바람이다."
+NARR: "로마인은 포도주에 물을 넷에서 여섯을 타서 마셨다. 원액은 야만인의 음주법이라 불렀다. 관습이 아니라 안전장치였다 — 탈수된 몸에 들어간 원액은 방향 감각부터 지운다."
+NARR: "당신이 새벽이라 믿고 걸어간 붉은 빛은, 산에서 흘러내려오는 것이었다."
+SHOW: orphea default
+ORPHEA: "따뜻하고, 용감하고, 확신에 찬 상태로 정확히 잘못된 방향을 고르셨습니다. 그 세 가지가 전부 한 단지에서 나왔고요."
+HIDE: orphea
+GOTO: ending_cast
+END_SCENE
+
+SCENE: s3c_niger
+BG: bg_grey_field.jpg
+BGM: bgm_false_dawn
+SFX: sfx_pumice_steps
+
+NARR: "당신은 리비아의 팔을 어깨에 두른다."
+PLAYER: "먼저 가라는 말은 못 들은 걸로 할게요. 갑시다."
+NARR: "창을 넘는 데만 한참이 걸린다. 벌판에 내려서자 그녀의 무게가 두 배가 된다. 열 걸음, 쉬고. 열 걸음, 쉬고."
+LIVIA: "죄송해요... 죄송해요..."
+PLAYER: "숨 아껴요. 사과 금지."
+NARR: "그때, 어둠 저편에서 불빛 하나가 흔들린다."
+SFX: sfx_voice_distant
+???: "리비아!! 리비아 — 목소리를 내! 어디 있어!"
+SHOW: livia default
+LIVIA: "니게르...? 니게르!! 여기! 여기예요!!"
+NARR: "불빛이 커진다. 등불을 든 사내가 벌판을 헤치며 달려온다. 등불을 제 몸으로 감싸 바람을 막으면서."
+SHOW: niger default
+NIGER: "리비아! 이 사람이— 살아 있었구나. 살아 있었어."
+NARR: "사내가 아내를 안는다. 등불이 두 사람 사이에서 흔들린다. 당신은 잠깐, 보고만 있는다."
+NIGER: "당신이 문을 열어준 사람이오? 이 빚은 내 등으로 갚겠소."
+NARR: "그가 짊어진 보따리를 풀어 이불을 꺼낸다. 그리고 당신 어깨에 둘러 준다."
+ITEM_GET: bedding
+NIGER: "항구에서 왔소. 오늘 밤 배는 없소 — 파도가 돌을 뱉어내고 있어. 항구 사람은 다 알지. 북쪽뿐이오."
+STAT: 유대 +20
+STAT: 체력 -10
+NARR: "니게르가 앞장선다. 등불이 길을 연다. 목소리 셋이, 서로를 확인하며 벌판을 건넌다."
+SHOW: orphea default
+ORPHEA: "기록 하나. 이 밤을 걸어서 살아남은 사람들은, 목소리로 서로를 찾았습니다. 지금의 당신들처럼요."
+HIDE: orphea
+GOTO: gate_bracelet
+END_SCENE
+
+<!-- ===== 이하 최종관문·엔딩 승인 후 계속 (아래는 임시 스텁) ===== -->
+
+SCENE: gate_bracelet
+NARR: "[관문 진입 이벤트 스텁 — 금팔찌. 승인 후 집필]"
+GOTO: final_gate
+END_SCENE
+
+SCENE: final_gate
+NARR: "[최종관문 스텁 — 세 갈래 길. 승인 후 집필]"
 GOTO: game_over
 END_SCENE
 
