@@ -293,12 +293,180 @@ HIDE: orphea
 GOTO: s2_entry
 END_SCENE
 
-<!-- ===== 이하 S2부터 사용자 승인 후 계속 (아래는 임시 스텁 — S2 집필 시 교체) ===== -->
+<!-- ===== STAGE 2 — 경석의 밤 ===== -->
 
 SCENE: s2_entry
-NARR: "[S2 스텁 — 경석의 밤. 승인 후 집필]"
+BG: bg_villa_night.jpg
+BGM: bgm_pumice_night
+SFX: sfx_pumice_hail
+
+NARR: "소리가 밤을 채운다. 우박 같은데, 우박보다 마르고, 그치지 않는다."
+NARR: "차양이 찢어지는 소리. 마당의 화분이 깨지는 소리. 램프 불빛 밖은 전부 소리로만 존재한다."
+THINK: "해가 진 건가, 하늘이 막힌 건가. 지금 몇 시지?"
+
+NARR: "당신은 정문으로 간다. 어깨로 민다. 문이 한 뼘 열리다 만다."
+NARR: "문틈으로 회색 알갱이가 주르륵 쏟아져 들어온다. 문 바깥에, 무릎 높이까지 돌이 쌓여 있다."
+THINK: "문이... 묻히고 있어. 이 집이 통째로."
+IF: giants_rumor
+NARR: "담 너머 어딘가에서 여럿이 웅얼거리는 소리가 들린다. 기도 소리다. 거인의 이름을 부르고 있다."
+THINK: "...저거 내가 퍼뜨린 소문이지."
+ENDIF
+
+SHOW: carpus stern
+NARR: "아트리움. 카르푸스가 금고 위의 재를 헝겊으로 닦고 있다. 벌써 몇 번째인지 모른다."
+NARR: "닦고, 열쇠 꾸러미를 센다. 하나, 둘, 셋. 경석 소리 사이로 쇳소리만 또박또박하다."
+CARPUS: "잘 왔다. 금고 곁에 있어라. 재산은 재산끼리 있는 법이다."
+PLAYER: "...지붕이 저렇게 우는데요. 여기 있으면 안 될 것 같습니다."
+CARPUS: "주인님 방이 이 집에서 제일 깊고 제일 튼튼하다. 돌천장이지. 짐도 사람도, 아침까지 거기 두면 된다."
+NARR: "그가 계단 앞에 선다. 위로 오르는 길목을, 등으로 막는 자세다."
+IF: 침착 >= 50
+PLAYER: "카르푸스. 주인님은 우리를 장부에서 지우고 갔어요. 마차에 사람 자리, 보셨잖아요."
+NARR: "헝겊을 쥔 손이 멈춘다. 반 박자. 그는 대답 대신 금고를 한 번 더 닦는다."
+ENDIF
+HIDE: carpus
+SHOW: orphea default
+ORPHEA: "저 사람은 이 집에서 서른 해를 저 장부로 살았습니다. 세계가 끝나는 밤에 다른 살 곳을 찾기엔, 늦었다고 판단한 거겠죠."
+HIDE: orphea
+GOTO: s2_choice
 END_SCENE
 
 SCENE: s2_street
-NARR: "[S2 거리 변형 스텁 — 승인 후 집필]"
+BG: bg_inn_ruined.jpg
+BGM: bgm_pumice_night
+SFX: sfx_pumice_hail
+
+NARR: "북쪽 가도는 멀었다. 어둠이 길을 지웠고, 돌비가 등을 두드렸다."
+NARR: "당신은 걷다가, 웅크리다가, 다시 걷다가 — 성문 근처 버려진 여관으로 굴러 들어왔다."
+STAT: 체력 -20
+NARR: "노숙 반나절에 몸이 만신창이다. 어깨와 목덜미가 얻어맞은 것처럼 욱신거린다."
+THINK: "행렬에서 누가 그랬지. '노예 혼자? 주인은 어쨌고?' ...그 눈초리가 계속 따라오는 기분이야."
+IF: giants_rumor
+NARR: "여관 벽 너머, 골목에 모인 사람들의 기도 소리가 웅웅 울린다. 거인의 이름이 들린다."
+THINK: "...퍼지긴 빨리 퍼졌네."
+ENDIF
+NARR: "여관은 비어 있다. 뒤집힌 걸상, 식다 만 화덕. 떠난 지 몇 시간 안 된 흔적들."
+GOTO: s2_choice
+END_SCENE
+
+SCENE: s2_choice
+BG: bg_dark_interior.jpg
+BGM: bgm_pumice_night
+SFX: sfx_roof_groan
+
+NARR: "램프 불빛이 닿는 곳까지가 세계의 전부다. 그 경계 바깥에서, 천장 들보가 길게 신음한다."
+SFX: sfx_collapse_far
+NARR: "쿵. 몇 집 건너에서 무언가 무너지는 소리. 바닥이 잘게 떨린다."
+NARR: "그리고 — 문 두드리는 소리."
+???: "...계세요? 아무도 없나요? 제발..."
+NARR: "여자 목소리다. 숨이 짧다. 두드림이 점점 약해진다."
+IF: NOT early_leaver
+SHOW: carpus stern
+CARPUS: "열지 마라. 명령엔 손님이 없다."
+NARR: "카르푸스가 말한다. 시선은 금고에 둔 채로."
+HIDE: carpus
+ENDIF
+THINK: "이 시간에, 이 돌비 속에 밖에 있는 사람이라고? 왜?"
+THINK: "문을 열면 짐이 하나 는다. 안 열면... 저 소리를 아침까지 기억하게 되겠지."
+
+CHOICE:
+  A: "가장 깊고 튼튼한 돌천장 방으로 피한다" → s2a_death
+  B: "문을 연다" → s2b_livia
+  C: "2층으로 올라가 지붕 창을 뜯는다" → s2c_roof
+
+END_SCENE
+
+SCENE: s2a_death
+BG: bg_stone_room.jpg
+BGM: bgm_doom_low
+SFX: sfx_ceiling_crack
+
+NARR: "돌천장 방은 조용하다. 경석 소리가 벽 너머의 일이 된다. 당신은 벽에 등을 대고 앉는다."
+THINK: "그래. 폭풍은 지나가는 거야. 튼튼한 지붕 아래서 기다리면—"
+NARR: "천장에서 소리가 난다. 돌이 우는 소리가 아니다. 돌이 갈라지는 소리다."
+NARR: "먼지가 램프 불빛 속으로 눈처럼 떨어진다. 당신이 문으로 몸을 돌리는 것과, 천장이 내려오는 것 중 — 천장이 빨랐다."
+NARR: "폼페이의 첫 죽음들은 불이 아니라 자기 집 지붕 아래에서 나왔다. 시간당 십오 센티미터씩 쌓인 경석은, 밤이 끝나기 전에 지붕을 이겼다."
+SHOW: orphea default
+ORPHEA: "가장 튼튼한 방을 고르셨죠. 정확한 판단입니다. 그 방은 지금도 튼튼해요. — 당신 위에서."
+HIDE: orphea
+GOTO: ending_cast
+END_SCENE
+
+SCENE: s2b_livia
+BG: bg_dark_interior.jpg
+BGM: bgm_quiet_tension
+
+NARR: "당신은 빗장을 연다. 문틈으로 재와 여자가 함께 쏟아져 들어온다."
+SHOW: livia default
+NARR: "만삭이다. 머리부터 어깨까지 재를 뒤집어써서, 사람이라기보다 조각상에 가깝다."
+LIVIA: "죄송해요. 폐가 되는 걸 알아요, 알아요. 그런데 배가, 배가 무거워서 뛸 수가 없어서..."
+PLAYER: "일단 앉으세요. 숨부터 쉬고요."
+LIVIA: "남편이... 항구에 남편이 있어요. 데리러 온다고 했는데, 길이 전부 돌이라..."
+NARR: "그녀가 말을 잇지 못한다. 당신은 손을 뻗어, 그녀의 어깨에 쌓인 재를 말없이 털어낸다."
+NARR: "재 밑에서 사람의 색이 나온다. 그녀가 조금 운다."
+IF: NOT early_leaver
+NARR: "카르푸스는 이쪽을 보지 않는다. 등을 돌린 채, 금고만 닦는다. 그게 그의 묵인이다."
+ENDIF
+STAT: 유대 +30
+STAT: 체력 -10
+STAT: 침착 -5
+FLAG_SET: livia_saved
+SHOW: orphea default
+ORPHEA: "짐이 하나 늘었군요. 기록해두죠."
+HIDE: orphea
+GOTO: s2_night
+END_SCENE
+
+SCENE: s2c_roof
+BG: bg_upper_floor.jpg
+BGM: bgm_quiet_tension
+SFX: sfx_wood_pry
+
+NARR: "당신은 계단을 오른다."
+IF: NOT early_leaver
+NARR: "카르푸스는 막지 않았다. 막는 대신, 밀랍판에 무언가를 적는 시늉을 했다. 계단을 오르는 내내 그 철필 소리가 등에 붙어 왔다."
+ENDIF
+NARR: "문 두드리는 소리가 아래층에서 몇 번 더 들렸다. 그리고, 멎었다."
+THINK: "...멎었네. 갔겠지. 어디로든."
+NARR: "2층. 지붕 창의 덧문을 뜯는다. 손톱이 갈라진다. 나무가 비명을 지르며 뜯겨 나온다."
+STAT: 체력 -15
+NARR: "침상이 눈에 들어온다. 당신은 이불을 끌어내려 몸에 두르고, 베개를 머리에 얹어 끈으로 턱 밑까지 묶는다."
+ITEM_GET: bedding
+NARR: "지붕 위로 머리를 내민다. 돌비가 베개를 두드린다. 아프지 않다 — 소리만 요란하다."
+NARR: "그리고 도시가 보인다. 지붕들의 바다. 그 위로 — 하늘이 두 가지 색이다."
+NARR: "남쪽 하늘은 먹을 부은 듯 캄캄하다. 북쪽 하늘 끝엔, 아직 별이 한 줌 남아 있다."
+THINK: "...남쪽이 왜 더 캄캄하지?"
+STAT: 정보 +15
+GOTO: s2_night
+END_SCENE
+
+SCENE: s2_night
+BG: bg_dark_interior.jpg
+BGM: bgm_long_night
+SFX: sfx_pumice_hail
+
+NARR: "밤이 길다. 램프 기름이 반으로 줄고, 다시 반으로 준다."
+NARR: "몇 집 건너에서 또 하나가 내려앉는다. 이제는 세지도 않는다."
+IF: livia_saved
+NARR: "어둠 속에서 리비아의 숨소리가 들린다. 일정하고, 짧다. 그 소리가 이 밤의 유일한 시계다."
+ENDIF
+THINK: "몇 시야. 지금 몇 시냐고. 아침이 오긴 오는 거야?"
+STAT: 침착 -15
+NARR: "당신은 벽에 기대 눈을 감는다. 감아도 소리는 들린다. 돌, 돌, 돌."
+GOTO: s3_thirst
+END_SCENE
+
+<!-- ===== 이하 S3부터 승인 후 계속 (아래는 임시 스텁) ===== -->
+
+SCENE: s3_thirst
+NARR: "[S3 스텁 — 거짓 새벽·갈증. 승인 후 집필]"
+GOTO: game_over
+END_SCENE
+
+SCENE: ending_cast
+NARR: "[사망 공통 캐스트 연출 스텁 — 엔딩 단계에서 집필]"
+GOTO: game_over
+END_SCENE
+
+SCENE: game_over
+NARR: "[게임오버 스텁]"
 END_SCENE
