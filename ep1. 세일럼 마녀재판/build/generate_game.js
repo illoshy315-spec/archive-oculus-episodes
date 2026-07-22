@@ -25,13 +25,14 @@ function findAsset(subdir, baseName, exts) {
   return null;
 }
 
-const bgNames = new Set(), bgmNames = new Set(), sfxNames = new Set(), charKeys = new Set();
+const bgNames = new Set(), bgmNames = new Set(), sfxNames = new Set(), charKeys = new Set(), cgNames = new Set();
 for (const scene of scenes) {
   for (const l of scene.lines) {
     if (l.t === 'BG') bgNames.add(l.v);
     else if (l.t === 'BGM') bgmNames.add(l.v);
     else if (l.t === 'SFX') sfxNames.add(l.v);
     else if (l.t === 'SHOW' && l.v !== '검은 형체') charKeys.add(l.v);
+    else if (l.t === 'CG') cgNames.add(l.v);
   }
 }
 
@@ -66,9 +67,16 @@ for (const label of statLabels) {
 }
 const statFrameAsset = findAsset('ui', 'stat_frame', ['.png', '.webp']);
 
-console.log(`에셋 감지: BG ${Object.keys(bgAssets).length}/${bgNames.size}, BGM ${Object.keys(bgmAssets).length}/${bgmNames.size}, SFX ${Object.keys(sfxAssets).length}/${sfxNames.size}, 초상 ${Object.keys(portraitAssets).length}/${charKeys.size}, 스탯 아이콘 ${Object.keys(statIconAssets).length}/${statLabels.length}, 프레임 ${statFrameAsset ? 'O' : 'X'}`);
+const cgAssets = {};
+for (const name of cgNames) {
+  const base = name.replace(/\.[^.]+$/, '');
+  const found = findAsset('cg', base, ['.jpg', '.jpeg', '.png', '.webp']);
+  if (found) cgAssets[name] = found;
+}
 
-const DATA = { scenes, statsInitial, statLabels, itemLabels, title: scenario.title, episodeId: scenario.episode_id, bgAssets, bgmAssets, sfxAssets, portraitAssets, statIconAssets, statFrameAsset };
+console.log(`에셋 감지: BG ${Object.keys(bgAssets).length}/${bgNames.size}, BGM ${Object.keys(bgmAssets).length}/${bgmNames.size}, SFX ${Object.keys(sfxAssets).length}/${sfxNames.size}, 초상 ${Object.keys(portraitAssets).length}/${charKeys.size}, CG ${Object.keys(cgAssets).length}/${cgNames.size}, 스탯 아이콘 ${Object.keys(statIconAssets).length}/${statLabels.length}, 프레임 ${statFrameAsset ? 'O' : 'X'}`);
+
+const DATA = { scenes, statsInitial, statLabels, itemLabels, title: scenario.title, episodeId: scenario.episode_id, bgAssets, bgmAssets, sfxAssets, portraitAssets, statIconAssets, statFrameAsset, cgAssets };
 
 const html = `<!DOCTYPE html>
 <html lang="ko">
@@ -130,6 +138,21 @@ const html = `<!DOCTYPE html>
   #timeskipText{
     color:var(--text-main); font-size:26px; letter-spacing:0.12em;
     opacity:0; animation:cardTextIn 0.6s ease forwards 0.3s; text-align:center;
+  }
+
+  #cgOverlay{
+    position:absolute; inset:0; z-index:9; background:#000; display:none;
+    align-items:center; justify-content:center; cursor:pointer; overflow:hidden;
+  }
+  #cgOverlay.show{ display:flex; animation:cardFade 0.4s ease; }
+  #cgOverlay img{ width:100%; height:100%; object-fit:contain; }
+  #cgOverlay .cgPlaceholder{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(160deg,#241c30,#0a0812); color:var(--text-dim);
+    font-size:13px; letter-spacing:0.08em; text-align:center; padding:20px;
+  }
+  #cgOverlay .cgHint{
+    position:absolute; bottom:18px; right:22px; font-size:11px; color:var(--text-dim); opacity:0.8;
   }
   @keyframes cardFade{ from{opacity:0;} to{opacity:1;} }
   @keyframes cardTextIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
@@ -286,6 +309,7 @@ const html = `<!DOCTYPE html>
   <div id="flash"></div>
   <div id="transition"></div>
   <div id="timeskipCard"><div><div class="line"></div><div id="timeskipText"></div></div></div>
+  <div id="cgOverlay"><div class="cgHint">클릭 / Space ▶</div></div>
   <div id="topBar">
     <div id="stats"></div>
     <div style="display:flex; align-items:center; gap:10px;">
@@ -400,6 +424,7 @@ function freshState(){
     visibleChars: new Set(),
     currentBg: null,
     showingTimeskip: false,
+    showingCG: false,
     lastLine: null,
     ended: false,
     backlog: []
@@ -540,6 +565,31 @@ function hideTimeskip(){
   state.showingTimeskip = false;
   $('#timeskipCard').classList.remove('show');
 }
+function showCG(name){
+  state.showingCG = true;
+  const overlay = $('#cgOverlay');
+  const asset = DATA.cgAssets[name];
+  const old = overlay.querySelector('img, .cgPlaceholder');
+  if (old) old.remove();
+  if (asset){
+    const img = document.createElement('img');
+    img.src = asset;
+    overlay.insertBefore(img, overlay.firstChild);
+  } else {
+    const ph = document.createElement('div');
+    ph.className = 'cgPlaceholder';
+    ph.textContent = '[삽화 예정: ' + name + ']';
+    overlay.insertBefore(ph, overlay.firstChild);
+  }
+  overlay.classList.add('show');
+  $('#choices').innerHTML=''; $('#advanceHint').style.visibility='hidden';
+  state.backlog.push({ speaker: '', cls: 'narr', text: '— [삽화] —' });
+  markSeen(); saveGame();
+}
+function hideCG(){
+  state.showingCG = false;
+  $('#cgOverlay').classList.remove('show');
+}
 
 // ---------- 라인 처리 ----------
 function currentScene(){ return sceneById.get(state.sceneId).scene; }
@@ -618,6 +668,7 @@ function runUntilBlocking(){
     if (l.t === 'GOTO'){ gotoScene(l.v); continue; }
 
     if (l.t === 'TIMESKIP'){ showTimeskip(l.v); return; }
+    if (l.t === 'CG'){ showCG(l.v); return; }
     if (l.t === 'TEXT'){ renderText(l); return; }
     if (l.t === 'CHOICE'){ renderChoices(l); return; }
 
@@ -721,6 +772,13 @@ function advance(){
     renderDebug();
     return;
   }
+  if (state.showingCG){
+    hideCG();
+    state.lineIdx++; runUntilBlocking();
+    if (checkEndingReached()) return;
+    renderDebug();
+    return;
+  }
   const scene = currentScene();
   const l = scene.lines[state.lineIdx];
   if (l && l.t === 'TEXT'){ state.lineIdx++; runUntilBlocking(); }
@@ -733,6 +791,7 @@ document.getElementById('panel').addEventListener('click', (e)=>{
   advance();
 });
 document.getElementById('timeskipCard').addEventListener('click', advance);
+document.getElementById('cgOverlay').addEventListener('click', advance);
 document.addEventListener('keydown', (e)=>{ if (e.code==='Space') advance(); });
 document.getElementById('restartBtn').addEventListener('click', newGame);
 
@@ -750,7 +809,7 @@ function skipLoop(){
   if (!skipMode || state.ended) return;
   const scene = sceneById.get(state.sceneId).scene;
   const l = scene.lines[state.lineIdx];
-  if (l && (l.t === 'TEXT' || l.t === 'TIMESKIP') && !skipStartSeen.has(lineKey())){
+  if (l && (l.t === 'TEXT' || l.t === 'TIMESKIP' || l.t === 'CG') && !skipStartSeen.has(lineKey())){
     skipMode = false; $('#skipToggle').classList.remove('active'); return;
   }
   if (l && l.t === 'CHOICE'){ skipMode = false; $('#skipToggle').classList.remove('active'); return; }
@@ -823,6 +882,7 @@ function renderCurrentBlockingLine(){
   if (l.t === 'TEXT') renderText(l);
   else if (l.t === 'CHOICE') renderChoices(l);
   else if (l.t === 'TIMESKIP') showTimeskip(l.v);
+  else if (l.t === 'CG') showCG(l.v);
   else runUntilBlocking();
 }
 function continueGame(){
