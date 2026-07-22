@@ -246,6 +246,38 @@ const html = `<!DOCTYPE html>
   #debugPanel h3{ color:var(--accent); font-size:12px; margin-bottom:6px; }
   #debugPanel .row{ margin-bottom:10px; }
   #debugPanel button{ font-size:10px; margin:2px; padding:3px 6px; cursor:pointer; }
+
+  #topBar button{
+    font-size:10px; color:var(--text-dim); background:none; border:1px solid rgba(255,255,255,0.2);
+    border-radius:4px; padding:3px 6px; cursor:pointer;
+  }
+  #topBar button.active{ color:var(--accent); border-color:var(--accent); background:rgba(185,140,255,0.12); }
+
+  #startMenu{
+    position:absolute; inset:0; z-index:15; background:rgba(0,0,0,0.94);
+    display:none; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  }
+  #startMenu.show{ display:flex; }
+  #startMenu h2{ color:var(--gold); font-size:18px; letter-spacing:0.05em; margin-bottom:8px; }
+  #startMenu button{
+    padding:10px 26px; background:none; border:1px solid var(--accent); color:var(--accent);
+    border-radius:6px; cursor:pointer; font-family:inherit; font-size:14px;
+  }
+  #startMenu button:hover{ background:rgba(185,140,255,0.12); }
+  #startMenu button.secondary{ border-color:rgba(255,255,255,0.3); color:var(--text-dim); }
+
+  #backlogPanel{
+    position:absolute; inset:0; z-index:18; background:rgba(5,4,7,0.97);
+    display:none; flex-direction:column; padding:20px; overflow-y:auto;
+  }
+  #backlogPanel.show{ display:flex; }
+  #backlogPanel .entry{ margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.06); }
+  #backlogPanel .entry .sp{ font-size:12px; color:var(--accent); margin-bottom:3px; }
+  #backlogPanel .entry .tx{ font-size:14px; line-height:1.6; color:var(--text-main); }
+  #backlogCloseBtn{
+    align-self:flex-end; margin-bottom:10px; padding:6px 14px; background:none;
+    border:1px solid var(--accent); color:var(--accent); border-radius:6px; cursor:pointer; font-family:inherit;
+  }
 </style>
 </head>
 <body>
@@ -258,11 +290,22 @@ const html = `<!DOCTYPE html>
     <div id="stats"></div>
     <div style="display:flex; align-items:center; gap:10px;">
       <div id="inventory"></div>
+      <button id="skipToggle">스킵</button>
+      <button id="backlogToggle">로그</button>
       <button id="debugToggle">DEBUG</button>
     </div>
   </div>
   <div id="toasts"></div>
   <div id="charLayer"></div>
+  <div id="startMenu">
+    <h2>이전 기록이 남아 있습니다</h2>
+    <button id="continueBtn">이어하기</button>
+    <button id="newGameBtn" class="secondary">새로 시작</button>
+  </div>
+  <div id="backlogPanel">
+    <button id="backlogCloseBtn">닫기 ✕</button>
+    <div id="backlogList"></div>
+  </div>
   <div id="panel">
     <div id="speaker"></div>
     <div id="textbox">클릭해서 시작</div>
@@ -358,8 +401,40 @@ function freshState(){
     currentBg: null,
     showingTimeskip: false,
     lastLine: null,
-    ended: false
+    ended: false,
+    backlog: []
   };
+}
+
+// ---------- 세이브/스킵/백로그 (2026-07-22 신설) ----------
+const SAVE_KEY = 'archiveOculus_save_' + DATA.episodeId;
+const SEEN_KEY = 'archiveOculus_seen_' + DATA.episodeId;
+let seenSet = new Set();
+let skipMode = false;
+
+function loadSeen(){ try { return new Set(JSON.parse(localStorage.getItem(SEEN_KEY) || '[]')); } catch(e){ return new Set(); } }
+function saveSeen(){ try { localStorage.setItem(SEEN_KEY, JSON.stringify([...seenSet])); } catch(e){} }
+function lineKey(){ return state.sceneId + ':' + state.lineIdx; }
+function markSeen(){ seenSet.add(lineKey()); saveSeen(); }
+
+function saveGame(){
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      sceneId: state.sceneId, lineIdx: state.lineIdx,
+      stats: state.stats, items: [...state.items], flags: [...state.flags],
+      choices: state.choices, history: state.history || [], currentBg: state.currentBg
+    }));
+  } catch(e){}
+}
+function hasSave(){ try { return !!localStorage.getItem(SAVE_KEY); } catch(e){ return false; } }
+function clearSave(){ try { localStorage.removeItem(SAVE_KEY); } catch(e){} }
+function loadSavedState(){
+  const raw = JSON.parse(localStorage.getItem(SAVE_KEY));
+  const s = freshState();
+  s.sceneId = raw.sceneId; s.lineIdx = raw.lineIdx;
+  s.stats = raw.stats; s.items = new Set(raw.items); s.flags = new Set(raw.flags);
+  s.choices = raw.choices; s.history = raw.history || []; s.currentBg = raw.currentBg;
+  return s;
 }
 
 // ---------- 조건 평가 ----------
@@ -449,6 +524,8 @@ function showTimeskip(text){
   $('#timeskipText').textContent = text;
   $('#timeskipCard').classList.add('show');
   $('#choices').innerHTML=''; $('#advanceHint').style.visibility='hidden';
+  state.backlog.push({ speaker: '', cls: 'narr', text: '— ' + text + ' —' });
+  markSeen(); saveGame();
 }
 function hideTimeskip(){
   state.showingTimeskip = false;
@@ -550,10 +627,13 @@ function renderText(l){
   textEl.textContent = l.text;
   $('#advanceHint').textContent = '클릭 / Space ▶';
   $('#advanceHint').style.visibility='visible';
+  state.backlog.push({ speaker: speakerEl.textContent, cls: speakerEl.className, text: l.text });
+  markSeen(); saveGame();
 }
 
 function renderChoices(l){
   $('#textbox').textContent=''; $('#speaker').textContent=''; $('#advanceHint').style.visibility='hidden';
+  saveGame();
   const box = $('#choices'); box.innerHTML='';
   const stageVar = CHOICE_STAGE_MAP[state.sceneId];
   for (const o of l.options){
@@ -645,7 +725,53 @@ document.getElementById('panel').addEventListener('click', (e)=>{
 });
 document.getElementById('timeskipCard').addEventListener('click', advance);
 document.addEventListener('keydown', (e)=>{ if (e.code==='Space') advance(); });
-document.getElementById('restartBtn').addEventListener('click', start);
+document.getElementById('restartBtn').addEventListener('click', newGame);
+
+// ---------- 스킵 ----------
+// markSeen()이 렌더와 동시에 실행되므로, 스킵 도중 처음 보는 줄도 렌더되자마자 "봤음"으로
+// 오염된다. 그래서 스킵 시작 시점의 seenSet을 스냅샷으로 얼려두고, 정지 판단은 그 스냅샷
+// 기준으로만 한다 — 라이브 seenSet은 계속 갱신하되(다음 스킵부터 반영) 이번 판단엔 안 씀.
+let skipStartSeen = null;
+function toggleSkip(){
+  skipMode = !skipMode;
+  $('#skipToggle').classList.toggle('active', skipMode);
+  if (skipMode) { skipStartSeen = new Set(seenSet); skipLoop(); }
+}
+function skipLoop(){
+  if (!skipMode || state.ended) return;
+  const scene = sceneById.get(state.sceneId).scene;
+  const l = scene.lines[state.lineIdx];
+  if (l && (l.t === 'TEXT' || l.t === 'TIMESKIP') && !skipStartSeen.has(lineKey())){
+    skipMode = false; $('#skipToggle').classList.remove('active'); return;
+  }
+  if (l && l.t === 'CHOICE'){ skipMode = false; $('#skipToggle').classList.remove('active'); return; }
+  advance();
+  if (state.ended) { skipMode = false; $('#skipToggle').classList.remove('active'); return; }
+  setTimeout(skipLoop, 80);
+}
+document.getElementById('skipToggle').addEventListener('click', (e)=>{ e.stopPropagation(); toggleSkip(); });
+
+// ---------- 백로그 ----------
+function renderBacklog(){
+  const list = $('#backlogList'); list.innerHTML = '';
+  for (const entry of state.backlog){
+    const div = document.createElement('div'); div.className = 'entry';
+    div.innerHTML = entry.speaker
+      ? \`<div class="sp">\${entry.speaker}</div><div class="tx \${entry.cls}">\${entry.text}</div>\`
+      : \`<div class="tx \${entry.cls}">\${entry.text}</div>\`;
+    list.appendChild(div);
+  }
+  list.scrollTop = list.scrollHeight;
+}
+document.getElementById('backlogToggle').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  renderBacklog();
+  $('#backlogPanel').classList.add('show');
+});
+document.getElementById('backlogCloseBtn').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  $('#backlogPanel').classList.remove('show');
+});
 
 // ---------- 디버그 패널 ----------
 document.getElementById('debugToggle').addEventListener('click', ()=>{
@@ -667,16 +793,45 @@ function renderDebug(){
   }
 }
 
-// ---------- 시작 ----------
-function start(){
+// ---------- 시작 (세이브/이어하기 포함, 2026-07-22) ----------
+function newGame(){
+  clearSave();
   state = freshState();
+  $('#startMenu').classList.remove('show');
   $('#endScreen').classList.remove('show');
   renderStats(); renderInventory(); renderChars();
   $('#textbox').textContent = ''; $('#speaker').textContent='';
   runUntilBlocking();
   if (!checkEndingReached()) renderDebug();
 }
-start();
+
+// 저장된 지점의 TEXT/CHOICE/TIMESKIP을 다시 판단하지 않고 그대로 재현 — runUntilBlocking을
+// 쓰면 이미 지난 STAT/FLAG 등이 중복 적용될 위험이 있어 직접 해당 라인 렌더 함수만 호출한다.
+function renderCurrentBlockingLine(){
+  const scene = sceneById.get(state.sceneId).scene;
+  const l = scene.lines[state.lineIdx];
+  if (!l) { runUntilBlocking(); return; }
+  if (l.t === 'TEXT') renderText(l);
+  else if (l.t === 'CHOICE') renderChoices(l);
+  else if (l.t === 'TIMESKIP') showTimeskip(l.v);
+  else runUntilBlocking();
+}
+function continueGame(){
+  state = loadSavedState();
+  $('#startMenu').classList.remove('show');
+  renderStats(); renderInventory(); renderChars();
+  if (state.currentBg) setBg(state.currentBg);
+  renderCurrentBlockingLine();
+  if (!checkEndingReached()) renderDebug();
+}
+function initGame(){
+  seenSet = loadSeen();
+  if (hasSave()) { $('#startMenu').classList.add('show'); }
+  else { newGame(); }
+}
+document.getElementById('continueBtn').addEventListener('click', continueGame);
+document.getElementById('newGameBtn').addEventListener('click', newGame);
+initGame();
 </script>
 </body>
 </html>
