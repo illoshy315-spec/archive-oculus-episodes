@@ -292,7 +292,7 @@ const html = `<!DOCTYPE html>
       <div id="inventory"></div>
       <button id="skipToggle">스킵</button>
       <button id="backlogToggle">로그</button>
-      <button id="debugToggle">DEBUG</button>
+      <button id="debugToggle" style="display:none">DEBUG</button>
     </div>
   </div>
   <div id="toasts"></div>
@@ -407,8 +407,17 @@ function freshState(){
 }
 
 // ---------- 세이브/스킵/백로그 (2026-07-22 신설) ----------
-const SAVE_KEY = 'archiveOculus_save_' + DATA.episodeId;
-const SEEN_KEY = 'archiveOculus_seen_' + DATA.episodeId;
+// _slot1 접미사: 지금은 슬롯 1개뿐이지만, 나중에 슬롯을 늘려도 기존 플레이어 세이브가
+// 깨지지 않도록 미리 슬롯 이름공간을 잡아둠 (유료 슬롯 확장 등 구매 확인 인프라는 별도 문제 — 지금 안 만듦).
+const SAVE_KEY = 'archiveOculus_save_' + DATA.episodeId + '_slot1';
+const SEEN_KEY = 'archiveOculus_seen_' + DATA.episodeId + '_slot1';
+
+// DEBUG는 제작자만 봐야 함 — 정적 파일이라 서버 사이드 게이팅이 불가능해서 클라이언트에서
+// 판단: 로컬호스트/127.0.0.1(제작 중 테스트)이거나 URL에 ?debug=1이 붙었을 때만 노출.
+// 실제 배포 도메인에서 기본적으로 숨겨짐 — 필요하면 ?debug=1로 예외적 접근 가능.
+const DEBUG_ALLOWED = ['localhost', '127.0.0.1', ''].includes(location.hostname)
+  || new URLSearchParams(location.search).get('debug') === '1';
+if (DEBUG_ALLOWED) document.getElementById('debugToggle').style.display = '';
 let seenSet = new Set();
 let skipMode = false;
 
