@@ -47,6 +47,14 @@ Archive Oculus/
 4. 스테이지 완성마다 lint_vn.ps1 실행 — 오류 0 + 경고 소명 전에는 제출 금지.
 5. IF가 읽는 플래그는 반드시 FLAG_SET 태그로 대본에 존재해야 한다.
 
+## Creator Hub (제작 지원 도구, 2026-07-22 신설)
+`C:\Users\user\archive-oculus-creator-hub` — 이 콘텐츠 레포와는 분리된 별도 로컬 도구(Node+Express).
+`npm start` → `http://localhost:4100`. 에셋 매니저(에셋 누락 대조)·플레이테스터(분기 헤드리스 시뮬레이션)
+완성됨 — Step 5 빌드 전에 쓴다 (`references/steps/step5_build.md` 참조). 보이스/영상 파이프라인은 아직
+미완성(ElevenLabs 키·voice_id 미확정). 콘텐츠 창작(집필·리서치·팩트체크)은 여기서 하지 않는다 —
+그건 여전히 Claude가 스킬 따라 직접 함. `.gemini\antigravity\scratch\archive-oculus-system`(Gemini
+자동 집필 시스템)은 별개 물건이며 사용 안 함, 그냥 방치.
+
 ## GitHub 레포
 - `archive-oculus-episodes`: 에피소드 작업물 전체 (이 폴더)
 - 작업 완료 시 자동 push
